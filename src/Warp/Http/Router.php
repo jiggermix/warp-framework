@@ -219,7 +219,7 @@ class Router
 
 	public static function Crud($base, $controller)
 	{
-		Router::Group("{$base}/", function()
+		Router::Group("{$base}/", function() use ($controller)
 		{
 			Router::Any("add", 				"{$controller}Controller@Create");
 			Router::Any("view/int:id", 		"{$controller}Controller@Read");
