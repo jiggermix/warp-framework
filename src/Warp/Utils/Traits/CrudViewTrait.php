@@ -30,11 +30,12 @@ trait CrudViewTrait
 				$this->crudFile = self::CREATE_FILE;
 			break;
 
-			case "read":			
+			case "read":
+				$this->crudFile = self::READ_FILE;			
 			case "update":
+				$this->crudFile = self::UPDATE_FILE;
 			case "destroy":
-				$this->crudFile = self::READ_FILE;
-
+				$this->crudFile = self::DELETE_FILE;
 				$model = new static::$model();
 				$model->SetKeyValue($parameters["id"]);
 				$model->Fetch();			
