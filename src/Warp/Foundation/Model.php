@@ -181,9 +181,28 @@ class Model
 	public static function GetQuery()
 	{		
 		$query =  new Query(static::GetSource());
-		foreach(static::$fields as $field => $details) 
+		
+		foreach(static::$fields as $field => $details)
+		{
 			if(!$details["hidden"])
-				$query->IncludeField($field);
+				$query->IncludeField($field, static::GetSource().".".$field);
+
+			if($details["pointer"])
+			{
+				$pointer = $details["pointer"];
+				$pointerModel = new $pointer;
+				$query->Join($pointerModel->GetSource(), $details["key"], $pointerModel->GetKey(), "LEFT_OUTER_JOIN");
+				
+				foreach($pointerModel->GetFields() as $pointerField => $pointerDetails)
+				{
+					if(!$pointerDetails["hidden"])
+						$query->IncludeField(
+							$pointerModel->GetSource()."_".$pointerField, 
+							$pointerModel->GetSource().".".$pointerField
+						);
+				}
+			}
+		}
 
 		$scopes = func_get_args();		
 				
@@ -201,7 +220,7 @@ class Model
 		$query = static::GetQuery();
 		$query->WhereEqualTo(static::GetKey(), static::GetKeyValue());
 		foreach(static::$fields as $field => $details) 
-			if(!$details["hidden"])
+			if(!$details["hidden"] && $details["type"] !=)
 				$query->IncludeField($field);
 		
 		$result = $query->First();

@@ -279,7 +279,7 @@ class Query
 		$source = $this->from;
 		
 		$listJoins = array();
-		foreach($this->joins as $join) $listJoins[] = "INNER JOIN {$join["source"]} ON ({$join["source"]}.{$join["connector"]} = {$source}.{$join["field"]})";
+		foreach($this->joins as $join) $listJoins[] = "{$join["type"]} {$join["source"]} ON ({$join["source"]}.{$join["connector"]} = {$source}.{$join["field"]})";
 		$joins = implode(" ", $listJoins);
 		
 		$whereObject = $this->getWhereObject();
