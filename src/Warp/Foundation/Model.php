@@ -220,7 +220,7 @@ class Model
 		$query = static::GetQuery();
 		$query->WhereEqualTo(static::GetKey(), static::GetKeyValue());
 		foreach(static::$fields as $field => $details) 
-			if(!$details["hidden"] && $details["type"] !=)
+			if(!$details["hidden"])
 				$query->IncludeField($field);
 		
 		$result = $query->First();
