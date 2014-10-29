@@ -1,0 +1,9 @@
+{
+    "name": "warp/framework",
+    "description": "The Warp Framework",
+	"keywords": ["framework", "warp"],
+	"license": "MIT",
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
