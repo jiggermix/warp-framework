@@ -1,6 +1,6 @@
 {
     "name": "warp/framework",
-    "version": "1.0.0",
+    "version": "v1.0.0",
     "description": "The Warp Framework",
 	"keywords": ["framework", "warp"],
 	"license": "MIT",
