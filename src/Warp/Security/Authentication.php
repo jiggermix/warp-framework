@@ -13,7 +13,6 @@ use Warp\Utils\Enumeration\SystemField;
 class Authentication
 {
 	const USER_PREFIX = "CURRENT_USER_";
-	const TOKEN = "CURRENT_USER_TOKEN";
 	protected static $user = "User";
 	protected static $userModel;
 	private function __construct() {}
@@ -57,7 +56,7 @@ class Authentication
 			foreach($user->GetValues() as $field => $value)
 				Session::Set(self::USER_PREFIX.strtoupper($field), $value);
 
-			Session::Set(self::TOKEN, Security::GenerateToken());
+			Security::GenerateToken();
 		}
 		else
 			throw new Exception("The specified user does not exist");
