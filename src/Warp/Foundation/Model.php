@@ -39,7 +39,10 @@ class Model
 	/***
 	 * Model builder
 	 */
-	protected static function build() {}
+	protected static function build() 
+	{
+		throw new Exception("A build method was not defined for the model");
+	}
 	
 	protected static function addTimestamps()
 	{
