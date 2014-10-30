@@ -33,11 +33,7 @@ class Debugger
 	
 	public static function Write($message, $type)
 	{
-		$alertBox = AlertBox::Create();
-		$alertBox->SetText($message);
-		$alertBox->AddClass("warp-{$type}");
-		
-		return $alertBox->Render();
+		return $message;
 	}
 	
 	public static function WriteError($message)
