@@ -148,7 +148,7 @@ class Application
 
 			echo Router::Fetch();
 		}
-		catch (Exception $ex)
+		catch (\Exception $ex)
 		{
 			$trace = "";
 
