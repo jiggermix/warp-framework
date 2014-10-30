@@ -22,6 +22,7 @@ class Model
 	protected static $fields = array();
 	protected static $scopes = array();
 	protected static $timestamps = true;
+	protected $dirty = array();
 	protected $values = array();
 	
 	/***
@@ -122,6 +123,7 @@ class Model
 			break;
 		}
 		
+		$this->dirty[] = $name;
 		$this->values[$name] = $value;
 	}
 	
@@ -247,9 +249,11 @@ class Model
 			$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
 		}
 		
-		foreach(static::$fields as $field => $details)
+		foreach($this->dirty as $field)
 		{
-			switch($this->GetFieldType[$field])
+			$details = static::$fields[$field];
+
+			switch($this->GetFieldType($field))
 			{
 				case FieldType::Pointer:
 					$command->BindParameter($field, $this->values[$field]->GetKeyValue(), $details["type"]);
@@ -260,6 +264,8 @@ class Model
 				break;
 			}
 		}
+
+		$this->dirty = array();
 
 		
 		$commandReturn = $command->Execute();
