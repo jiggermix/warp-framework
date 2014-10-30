@@ -52,7 +52,7 @@ class Authentication
 
 		if($user)
 		{
-			foreach($user->GetValues() as $field => $value)
+			foreach($user as $field => $value)
 				Session::Set(self::USER_PREFIX.strtoupper($field), $value);
 
 			Security::GenerateToken();
