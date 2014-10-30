@@ -16,7 +16,7 @@ class URL
 
 	public static function To($url)
 	{
-		return Resource::Local($url);
+		return Router::GetURL().$url;
 	}
 }
 

@@ -33,7 +33,7 @@ class Router
 	public static function GetURL()
 	{
 		$URL = $_SERVER['REQUEST_URI'];
-		if(static::$path) $URL = str_replace(static::$path."/", "", $_SERVER['REQUEST_URI']);
+		//if(static::$path) $URL = str_replace(static::$path."/", "", $_SERVER['REQUEST_URI']);
 		
 		return $URL;
 	}
@@ -56,8 +56,8 @@ class Router
 	protected static function parseRoute($route)
 	{
 		// Define the root path
-		//$baseURL = static::$path;
-		$baseURL = "";
+		$baseURL = static::$path;
+		//$baseURL = "";
 
 		$route = static::$prefix . $route;
 

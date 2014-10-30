@@ -9,6 +9,7 @@
 namespace Warp\Core;
 
 use Warp\Core\Application;
+use Warp\Http\URL;
 
 class Resource
 {
@@ -21,11 +22,7 @@ class Resource
 
 	public static function Local($resource)
 	{
-		$path = Application::GetInstance()->GetPath();
-		if($path) $path = "/".$path."/";
-		else $path = "";
-
-		return $path.$resource;
+		return URL::To($resource);
 	}
 	
 	public static function ImportStyle($name, $external=false)
