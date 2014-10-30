@@ -32,8 +32,7 @@ class Router
 	
 	public static function GetURL()
 	{
-		$URL = $_SERVER['REQUEST_URI'];
-		//if(static::$path) $URL = str_replace(static::$path."/", "", $_SERVER['REQUEST_URI']);
+		$URL = substr($_SERVER['REQUEST_URI'], 1);
 		
 		return $URL;
 	}
