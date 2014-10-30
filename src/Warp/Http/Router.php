@@ -27,13 +27,13 @@ class Router
 	
 	public static function GetServer()
 	{
-		return $_SERVER['SERVER_NAME'];
+		return $_SERVER['HTTP_HOST'];
 	}
 	
 	public static function GetURL()
 	{
 		$URL = substr($_SERVER['REQUEST_URI'], 1);
-		
+
 		return $URL;
 	}
 	
