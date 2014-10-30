@@ -7,6 +7,8 @@
  */
 
 namespace Warp\Security;
+
+use Warp\Session\Session;
  
 class Security
 {
