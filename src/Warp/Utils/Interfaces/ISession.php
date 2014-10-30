@@ -10,6 +10,7 @@ namespace Warp\Utils\Interfaces;
 
 interface ISession
 {
+	public static function Start();
 	public static function Has($key);
 	public static function Set($key, $value);
 	public static function Delete($key);

@@ -35,6 +35,8 @@ class Application
 		static::$instance = new Application;
 		static::GetInstance()->SetTimezone("UTC");
 
+		Session::Start();
+
 		return static::$instance;
 	}
 	

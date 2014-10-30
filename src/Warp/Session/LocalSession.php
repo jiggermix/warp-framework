@@ -12,6 +12,11 @@ use Warp\Utils\Interfaces\ISession;
 
 class LocalSession implements ISession
 {
+	public static function Start()
+	{
+		session_start();
+	}
+
 	public static function Has($key)
 	{
 		return isset($_SESSION[$key]);
