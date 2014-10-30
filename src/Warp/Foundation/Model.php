@@ -221,7 +221,7 @@ class Model
 	public function Fetch()
 	{
 		$query = static::GetQuery();
-		$query->WhereEqualTo(static::GetKey(), static::GetKeyValue());
+		$query->WhereEqualTo(static::GetSource().".".static::GetKey(), static::GetKeyValue());
 		
 		$result = $query->First();
 
