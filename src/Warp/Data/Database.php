@@ -44,7 +44,7 @@ class Database
 		{			
 			$configuration = static::$configurations[static::$currentDatabase];
 			if(static::$currentDatabase == null) $configuration = static::$configurations[0];
-			if(!$configuration) throw new Exception("Sorry, could not find the database configuration.");
+			if(!$configuration) throw new \Exception("Sorry, could not find the database configuration.");
 			
 			$db = null;
 			
@@ -71,7 +71,7 @@ class Database
 			$exception = "Sorry, could not connect to the database. Please try again. " . $e->getMessage();
 		}
 
-		if($exception) throw new Exception($exception);
+		if($exception) throw new \Exception($exception);
 	
 		return $db;
 	}
@@ -102,7 +102,7 @@ class Database
 			}
 			else
 			{
-				throw new Exception("Sorry, there was a problem with the query statement.");
+				throw new \Exception("Sorry, there was a problem with the query statement.");
 			}
 		}
 		catch (PDOException $e)
@@ -110,7 +110,7 @@ class Database
 			$exception = "Sorry, there was a problem with the query. ({$e->getMessage()})";
 		}
 
-		if($exception) throw new Exception($exception);
+		if($exception) throw new \Exception($exception);
 		
 		return $query->fetch($fetchMode);
 	}
@@ -141,7 +141,7 @@ class Database
 			}
 			else
 			{
-				throw new Exception("Sorry, there was a problem with the query statement.");
+				throw new \Exception("Sorry, there was a problem with the query statement.");
 			}
 		}
 		catch (PDOException $e)
@@ -149,7 +149,7 @@ class Database
 			$exception = "Sorry, there was a problem with the query. ({$e->getMessage()})";
 		}
 
-		if($exception) throw new Exception($exception);
+		if($exception) throw new \Exception($exception);
 		
 		return $query->fetchAll($fetchMode);
 	}
@@ -188,7 +188,7 @@ class Database
 			$exception = "Sorry, there was a problem with query execution. ({$e->getMessage()})";
 		}
 
-		if($exception) throw new Exception($exception);
+		if($exception) throw new \Exception($exception);
 		
 		$returnObject = (object) array(
 			DatabaseReturn::RowsAffected => $rowsAffected,
@@ -234,7 +234,7 @@ class Database
 			$exception = "Sorry, there was a problem with query execution. ({$e->getMessage()})";
 		}
 
-		if($exception) throw new Exception($exception);
+		if($exception) throw new \Exception($exception);
 		
 		$db->commit();
 		return $rowsAffected;

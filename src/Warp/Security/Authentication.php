@@ -41,9 +41,9 @@ class Authentication
 		if($credentials["password"])
 			$verified = Security::CheckHash($result->password, $credentials["password"]);
 		else
-			throw new Exception("Password is required");
+			throw new \Exception("Password is required");
 
-		if(!$verified) throw new Exception("Invalid password");
+		if(!$verified) throw new \Exception("Invalid password");
 
 		return $result;
 	}
@@ -60,7 +60,7 @@ class Authentication
 			Security::GenerateToken();
 		}
 		else
-			throw new Exception("The specified user does not exist");
+			throw new \Exception("The specified user does not exist");
 	}
 
 	public static function User()
