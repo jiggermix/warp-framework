@@ -17,7 +17,7 @@ class Security
 	{
 		$hasher = new PasswordHash(self::HASH_COST_LOG2, self::HASH_PORTABLE);
 		$spassword = $hasher->HashPassword($password);
-		if(strlen($spassword) < 20) fail("Failed to secure the password.");
+		if(strlen($spassword) < 20) throw new Exception("Failed to secure the password.");
 		unset($hasher);
 		
 		return $spassword;

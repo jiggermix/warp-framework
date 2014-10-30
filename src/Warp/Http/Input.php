@@ -25,7 +25,7 @@ class Input
 		return $input;
 	}
 
-	public static function FromGet($parameter)
+	public static function FromGet($parameter=null)
 	{
 		$input = array();
 
@@ -40,7 +40,7 @@ class Input
 		}
 	}	
 
-	public static function FromPost($parameter)
+	public static function FromPost($parameter=null)
 	{
 		$input = array();
 
@@ -55,7 +55,7 @@ class Input
 		}
 	}
 
-	public static function FromFile($parameter)
+	public static function FromFile($parameter=null)
 	{
 		if($parameter)
 			return $_FILES[$parameter];
@@ -63,7 +63,7 @@ class Input
 			return $_FILES;
 	}
 
-	public static function FromRaw($parameter)
+	public static function FromRaw($parameter=null)
 	{
 		if($parameter)
 			return $_REQUEST[$parameter];
@@ -71,7 +71,7 @@ class Input
 			$_REQUEST;
 	}
 
-	public static function FromGetRaw($parameter)
+	public static function FromGetRaw($parameter=null)
 	{
 		if($parameter)
 			return $_GET[$parameter];
@@ -79,7 +79,7 @@ class Input
 			$_GET;
 	}
 
-	public static function FromPostRaw($parameter)
+	public static function FromPostRaw($parameter=null)
 	{
 		if($parameter)
 			return $_POST[$parameter];
