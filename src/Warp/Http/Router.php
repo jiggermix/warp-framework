@@ -49,7 +49,7 @@ class Router
 	
 	public static function GetPath()
 	{
-		return static::$path;
+		return static::$path ? static::$path . "/" : "";
 	}
 
 	protected static function parseRoute($route)
