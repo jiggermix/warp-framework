@@ -11,12 +11,9 @@ namespace Warp\Utils\Traits;
 trait APIControllerTrait
 {
 	public static $HasAPI = true;
-	
+
 	public function ViewAction($parameters)
 	{
-		$controllerPath = Router::GetURLElementAt(1);
-		if(!static::$patterns) static::$patterns = new PatternList();
-
 		if($parameters["id"])
 		{
 			$key = $parameters["id"];
@@ -54,8 +51,6 @@ trait APIControllerTrait
 
 			return json_encode($results);
 		}
-		
-		return static::$patterns->FindMatch($url)->Execute();
 	}
 	
 	public function AddAction($parameters)
