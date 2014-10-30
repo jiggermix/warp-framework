@@ -13,7 +13,7 @@ class Security
 	const HASH_COST_LOG2 = 8;
 	const HASH_PORTABLE = false;
 	
-	public static function Encrypt($password)
+	public static function Hash($password)
 	{
 		$hasher = new PasswordHash(self::HASH_COST_LOG2, self::HASH_PORTABLE);
 		$spassword = $hasher->HashPassword($password);
@@ -23,7 +23,7 @@ class Security
 		return $spassword;
 	}
 	
-	public static function Match($password, $hash)
+	public static function CheckHash($password, $hash)
 	{
 		$hasher = new PasswordHash(self::HASH_COST_LOG2, self::HASH_PORTABLE);
 		return $hasher->CheckPassword($password,$hash);

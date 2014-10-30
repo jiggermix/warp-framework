@@ -118,7 +118,7 @@ class Model
 			break;
 			
 			case FieldType::Password:
-				$value = Security::Encrypt($value);
+				$value = Security::Hash($value);
 			break;
 		}
 		
