@@ -174,19 +174,19 @@ class Router
 			static::$patterns->AddPattern($pattern, $action, $options);
 	}
 
-	public static function Any($route, $action)
+	public static function Any($route, $action, $options=null)
 	{
-		static::Add($route, $action);
+		static::Add($route, $action, $options);
 	}
 
-	public static function Get($route, $action)
+	public static function Get($route, $action, $options=array())
 	{
-		static::Add($route, $action, array("type" => "GET"));
+		static::Add($route, $action, array_merge(array("type" => "GET"), $options));
 	}
 
-	public static function Post($route, $action)
+	public static function Post($route, $action, $options=array())
 	{
-		static::Add($route, $action, array("type" => "POST"));
+		static::Add($route, $action, array_merge(array("type" => "POST"), $options));
 	}
 
 	public static function None($class)
@@ -242,8 +242,20 @@ class Router
 			
 		return static::$patterns->FindMatch(static::GetURL(), function($pattern)
 		{
-			return ($pattern["options"] == null) ?
-			 true : $pattern["options"]["type"] == static::GetVerb();
+			return (($pattern["options"] == null) ?
+			 true : $pattern["options"]["type"] == static::GetVerb())
+			&& ;
+
+			if($pattern["options"] == null) return true;
+			else
+			{
+				$valid = true;
+				
+				if($pattern["options"]["type"] != static::GetVerb()) $valid = false;
+				if(!$pattern["options"]["before"]()) $valid = false;
+
+				return $valid;
+			}
 		})
 		->Execute();
 	}
