@@ -28,12 +28,16 @@ class Router
 	
 	public static function GetServer()
 	{
-		return $_SERVER['HTTP_HOST'];
+		$port = $_SERVER['SERVER_PORT'];
+		return $_SERVER['SERVER_NAME'] . ($port? ":".$port : "");
 	}
 	
 	public static function GetURL()
 	{
 		$URL = substr($_SERVER['REQUEST_URI'], 1);
+
+		if(strpos($_SERVER['REQUEST_URI'], "?") > 0)
+			$URL = strtok($URL, "?");
 
 		return $URL;
 	}

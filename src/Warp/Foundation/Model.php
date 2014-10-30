@@ -266,7 +266,6 @@ class Model
 		}
 
 		$this->dirty = array();
-
 		
 		$commandReturn = $command->Execute();
 		
