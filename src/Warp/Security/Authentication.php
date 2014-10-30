@@ -19,7 +19,7 @@ class Authentication
 
 	protected static function getUserModel()
 	{
-		if(!static::$userModel) static::$userModel = new (static::$user . "Model");
+		if(!static::$userModel) static::$userModel = new static::$user."Model";
 		return static::$userModel;
 	}
 
