@@ -184,7 +184,7 @@ class Model
 		
 		foreach(static::$fields as $field => $details)
 		{
-			if(!$details["hidden"])
+			if(!$details["hidden"] && $field)
 				$query->IncludeField($field, static::GetSource().".".$field);
 
 			if($details["pointer"])
@@ -195,7 +195,7 @@ class Model
 				
 				foreach($pointerModel->GetFields() as $pointerField => $pointerDetails)
 				{
-					if(!$pointerDetails["hidden"])
+					if(!$pointerDetails["hidden"] && $pointerField)
 						$query->IncludeField(
 							$pointerModel->GetSource()."_".$pointerField, 
 							$pointerModel->GetSource().".".$pointerField

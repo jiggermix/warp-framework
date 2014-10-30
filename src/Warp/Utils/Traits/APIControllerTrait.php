@@ -8,6 +8,8 @@
 
 namespace Warp\Utils\Traits;
 
+use Warp\Utils\Enumerations\FieldType;
+
 trait APIControllerTrait
 {
 	public static $HasAPI = true;
@@ -36,7 +38,7 @@ trait APIControllerTrait
 			
 			$listRelations = array();
 			foreach(static::GetModel()->GetFields() as $field => $details)
-				if($details["type"] == FieldType::RELATION)
+				if($details["type"] == FieldType::Relation)
 					$listRelations[] = $field;
 		
 															
