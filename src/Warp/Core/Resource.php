@@ -29,14 +29,14 @@ class Resource
 	{
 		$path = static::Local("resources/styles/{$name}");
 		if($external) $path = $name;
-		static::setResource($name, "<link rel='stylesheet' href='{$path}'>");
+		static::setResource($name, "<link rel='stylesheet' href='{$path}'>\n");
 	}
 	
 	public static function ImportScript($name, $external=false)
 	{
 		$path = static::Local("resources/scripts/{$name}");		
 		if($external) $path = $name;
-		static::setResource($name,"<script src='{$path}'></script>");
+		static::setResource($name,"<script src='{$path}'></script>\n");
 	}
 	
 	public static function Render()
