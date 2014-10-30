@@ -15,23 +15,23 @@ class API
 	public static function Request($parameters, $type = "JSON")
 	{
 		$response = Response::Make(APIStatus::Unknown, APIMessage::Unknown, array());
-		$controllerClass = $parameters["class"];
+		$controllerName = "\\" . $parameters["class"] . "Controller";
 
-		if(!$controllerClass->HasAPI()) return Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
+		if(!$controllerName::HasAPI()) return Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
 		
 		switch($type)
 		{
 			case APIRequest::REST:
-				try
+				if (class_exists($controllerName)) 
 				{
 					// Retrieve Array
-					$controller = $controllerClass;
+					$controller = new $controllerName();    
 					$actionName = $parameters["action"] . "Action";
 					
 					if(method_exists($controller, $actionName))
 					{
 						$results =  $controller->$actionName($parameters["parameters"]);
-
+										
 						if($results)
 							$response = Response::Make(APIStatus::Success, APIMessage::Success, json_decode($results))->ToJSON();
 						else
@@ -39,7 +39,7 @@ class API
 					}
 					else $response = Response::Make(APIStatus::Invalid, APIMessage::Invalid, array())->ToJSON();
 				} 
-				catch(Exception $ex)
+				else
 				{    
 					$response = Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
 				}
