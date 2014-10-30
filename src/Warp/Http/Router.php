@@ -253,7 +253,7 @@ class Router
 				if($pattern["options"]["type"] != static::GetVerb()) 
 					$valid = false;
 
-				if($pattern["options"]["auth.basic"])
+				if($pattern["options"]["before"] == "auth.basic")
 					$valid = Auth::User() ? true : false;
 
 				return $valid;
