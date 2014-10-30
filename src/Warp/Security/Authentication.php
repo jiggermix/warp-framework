@@ -31,19 +31,17 @@ class Authentication
 		foreach($credentials as $credential => $value)
 		{
 			if($credential == "password")
-				continue;
+				$value = Security::Hash($value);
 
 			$query->WhereEqualTo($credential, $value);
 		}
 
 		$result = $query->First();
 
-		if($credentials["password"])
-			$verified = Security::CheckHash($credentials["password"], $result->password);
-		else
+		if(!$credentials["password"])
 			throw new \Exception("Password is required");
 
-		if(!$verified) throw new \Exception("Invalid password");
+		if(!$result) throw new \Exception("Invalid login credentials");
 
 		return $result;
 	}
