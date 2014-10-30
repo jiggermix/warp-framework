@@ -152,7 +152,7 @@ class Application
 		{
 			$trace = "";
 
-			if(static::GetInstance()->GetDebugMode() == DebugMode::DEVELOPMENT)
+			if(static::GetInstance()->GetDebugMode() == DebugMode::Development)
 				$trace = ": " . json_encode($ex->getTrace());
 
 			echo Debugger::WriteError($ex->getMessage() . $trace);
