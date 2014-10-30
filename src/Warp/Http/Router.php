@@ -10,6 +10,7 @@ namespace Warp\Http;
 
 use Warp\Utils\PatternList;
 use Warp\Http\Response;
+use Warp\Security\Auth;
 
 class Router
 {
