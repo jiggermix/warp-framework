@@ -57,6 +57,8 @@ class Authentication
 				Session::Set(self::USER_PREFIX.strtoupper($field), $value);
 
 			Security::GenerateToken();
+
+			return true;
 		}
 		else
 			throw new \Exception("The specified user does not exist");
