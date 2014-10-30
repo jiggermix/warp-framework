@@ -15,7 +15,6 @@ class Controller
 	protected static $model = null;
 	protected static $view = null;
 	protected static $patterns;
-	protected static $api = false;
 	
 	public static function GetModel()
 	{
@@ -36,11 +35,6 @@ class Controller
 		$viewName = static::$view;
 		if(!$viewName) $viewName = str_replace("Controller", "View", get_called_class());
 		return new $viewName();
-	}
-
-	public static function HasAPI()
-	{
-		return static::$api;
 	}
 	
 	public function IndexAction($parameters)

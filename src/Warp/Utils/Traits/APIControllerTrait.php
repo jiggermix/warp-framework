@@ -10,8 +10,8 @@ namespace Warp\Utils\Traits;
 
 trait APIControllerTrait
 {
-	protected static $api = true;
-
+	public static $HasAPI = true;
+	
 	public function ViewAction($parameters)
 	{
 		$controllerPath = Router::GetURLElementAt(1);

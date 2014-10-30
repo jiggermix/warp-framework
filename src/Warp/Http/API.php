@@ -14,10 +14,10 @@ class API
 {
 	public static function Request($parameters, $type = "JSON")
 	{
-		$response = Response::Make(APIStatus::Unknown, APIMessage::Unknown, array());
+		$response = Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
 		$controllerName = "\\" . $parameters["class"] . "Controller";
-
-		if(!$controllerName::HasAPI()) return Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
+		
+		if(!$controllerName::$HasAPI) return $response;
 		
 		switch($type)
 		{
