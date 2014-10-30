@@ -242,10 +242,6 @@ class Router
 			
 		return static::$patterns->FindMatch(static::GetURL(), function($pattern)
 		{
-			return (($pattern["options"] == null) ?
-			 true : $pattern["options"]["type"] == static::GetVerb())
-			&& ;
-
 			if($pattern["options"] == null) return true;
 			else
 			{
