@@ -57,8 +57,9 @@ trait APIControllerTrait
 	
 	public function AddAction($parameters)
 	{
+		$input = Input::FromPost();
 		$model = static::GetModel();
-		foreach($parameters as $parameter => $value) $model->Set($parameter, $value);
+		foreach($input as $parameter => $value) $model->Set($parameter, $value);
 
 		$model->Save();
 		return json_encode(array("key" => $model->GetKeyValue()));
@@ -66,8 +67,9 @@ trait APIControllerTrait
 	
 	public function EditAction($parameters)
 	{
+		$input = Input::FromPost();
 		$model = static::GetModel();
-		foreach($parameters as $parameter => $value) $model->Set($parameter, $value);
+		foreach($input as $parameter => $value) $model->Set($parameter, $value);
 		if(!$model->GetKeyValue()) return;
 		
 		$model->Save();
@@ -76,10 +78,11 @@ trait APIControllerTrait
 	
 	public function DeletAction($parameters)
 	{
+		$input = Input::FromPost();
 		$model = static::GetModel();
 		$key = static::GetModel()->GetKey();
-		if(!isset($parameters[$key])) return;
-		$model->SetKeyValue($parameters[$key]);
+		if(!isset($input[$key])) return;
+		$model->SetKeyValue($input[$key]);
 		
 		$model->Delete();
 		return json_encode(array("key" => $model->GetKeyValue()));
