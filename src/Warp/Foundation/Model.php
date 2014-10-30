@@ -123,7 +123,7 @@ class Model
 			break;
 		}
 		
-		$this->dirty[] = $name;
+		$this->dirty[$name] = $value;
 		$this->values[$name] = $value;
 	}
 	
@@ -249,7 +249,7 @@ class Model
 			$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
 		}
 		
-		foreach($this->dirty as $field)
+		foreach($this->dirty as $field => $value)
 		{
 			$details = static::$fields[$field];
 
