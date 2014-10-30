@@ -9,6 +9,7 @@
 namespace Warp\Security;
 
 use Warp\Utils\Enumeration\SystemField;
+use Warp\Session\Session;
 
 class Authentication
 {
