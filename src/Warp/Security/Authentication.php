@@ -39,7 +39,7 @@ class Authentication
 		$result = $query->First();
 
 		if($credentials["password"])
-			$verified = Security::CheckHash($result->password, $credentials["password"]);
+			$verified = Security::CheckHash($credentials["password"], $result->password);
 		else
 			throw new \Exception("Password is required");
 
