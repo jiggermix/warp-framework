@@ -10,6 +10,7 @@ namespace Warp\Core;
 
 use Warp\Http\Router;
 use Warp\Data\Database;
+use Warp\Utils\Debugger;
 use Warp\Utils\Enumerations\DebugMode;
  
 class Application
