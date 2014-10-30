@@ -10,7 +10,7 @@ namespace Warp\Http;
 
 use Warp\Utils\PatternList;
 use Warp\Http\Response;
-use Warp\Security\Auth;
+use Warp\Security\Authentication;
 
 class Router
 {
@@ -251,7 +251,7 @@ class Router
 					$valid = false;
 
 				if($pattern["options"]["before"] == "auth.basic")
-					$valid = Auth::User() ? true : false;
+					$valid = Authentication::User() ? true : false;
 
 				return $valid;
 			}
