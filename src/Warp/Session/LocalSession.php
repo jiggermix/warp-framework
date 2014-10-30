@@ -21,6 +21,11 @@ class LocalSession implements ISession
 	{
 		$_SESSION[$key] = $value;
 	}
+
+	public static function Delete($key)
+	{
+		unset($_SESSION[$key]);
+	}
 	
 	public static function Get($key)
 	{

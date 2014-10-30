@@ -12,6 +12,7 @@ interface ISession
 {
 	public static function Has($key);
 	public static function Set($key, $value);
+	public static function Delete($key);
 	public static function Get($key);
 	public static function Destroy();
 }

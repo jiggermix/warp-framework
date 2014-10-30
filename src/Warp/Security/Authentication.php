@@ -14,6 +14,7 @@ use Warp\Session\Session;
 class Authentication
 {
 	const USER_PREFIX = "CURRENT_USER_";
+	const TOKEN = "SESSION_TOKEN";
 	protected static $user = "User";
 	protected static $userModel;
 	private function __construct() {}
@@ -25,7 +26,7 @@ class Authentication
 		return static::$userModel;
 	}
 
-	public static function Check($credentials)
+	public static function Validate($credentials)
 	{
 		$query = static::getUserModel()->GetQuery();
 
@@ -49,7 +50,7 @@ class Authentication
 
 	public static function LogIn($credentials)
 	{
-		$user = static::Check($credentials);
+		$user = static::Validate($credentials);
 
 		if($user)
 		{
@@ -64,18 +65,38 @@ class Authentication
 			throw new \Exception("The specified user does not exist");
 	}
 
-	public static function User()
+	public static function LogOut()
 	{
 		$user = static::getUserModel();
+		static::$userModel = null;
+
+		foreach($user->GetFields() as $field => $details)
+				Session::Delete(self::USER_PREFIX.strtoupper($field));
+
+		Session::Delete(self::TOKEN);
+	}
+
+	public static function User()
+	{
+		$token = Session::Get(self::TOKEN);
 		
-		if(!$user->GetKeyValue())
+		if($token)
 		{
-			$key = Session::Get(self::USER_PREFIX.strtoupper($user->GetKey()));
-			static::$userModel->SetKeyValue($key);
-			static::$userModel->Fetch();
+			$user = static::getUserModel();
+			
+			if(!$user->GetKeyValue())
+			{
+				$key = Session::Get(self::USER_PREFIX.strtoupper($user->GetKey()));
+				static::$userModel->SetKeyValue($key);
+				static::$userModel->Fetch();
+			}
+			
+			return static::$userModel;
 		}
-		
-		return static::$userModel;
+		else
+		{
+			return null;
+		}
 	}
 }
 
