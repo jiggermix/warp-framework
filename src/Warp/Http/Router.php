@@ -216,14 +216,14 @@ class Router
 		static::$prefix = null;
 	}
 
-	public static function Crud($base, $controller)
+	public static function Crud($base, $controller, $options=null)
 	{
 		Router::Group("{$base}/", function() use ($controller)
 		{
-			Router::Any("add", 				"{$controller}Controller@Create");
-			Router::Any("view/int:id", 		"{$controller}Controller@Read");
-			Router::Any("edit/int:id", 		"{$controller}Controller@Update");
-			Router::Any("delete/int:id",	"{$controller}Controller@Destroy");
+			Router::Any("add", 				"{$controller}Controller@Create", $options);
+			Router::Any("view/int:id", 		"{$controller}Controller@Read", $options);
+			Router::Any("edit/int:id", 		"{$controller}Controller@Update", $options);
+			Router::Any("delete/int:id",	"{$controller}Controller@Destroy", $options);
 		});
 	}
 
