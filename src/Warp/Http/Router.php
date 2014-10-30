@@ -15,6 +15,7 @@ class Router
 {
 	protected static $path;
 	protected static $prefix;
+	protected static $auths;
 	protected static $patterns;
 	protected static $elementDelimiter = "/";
 	protected static $home;
@@ -146,6 +147,11 @@ class Router
 
 		return $regex;
 	}
+
+	public static function Auth($name, $action)
+	{
+		static::$auths[$name] = $action;
+	}
 	
 	public static function Add($route, $action, $options=null)
 	{
@@ -250,9 +256,9 @@ class Router
 			else
 			{
 				$valid = true;
-				
+
 				if($pattern["options"]["type"] != static::GetVerb()) $valid = false;
-				if(!$pattern["options"]["before"]()) $valid = false;
+				if(!static::$auths[$pattern["options"]["auth"]]()) $valid = false;
 
 				return $valid;
 			}
