@@ -73,7 +73,7 @@ class Authentication
 			static::$userModel->Fetch();
 		}
 		
-		return &static::$userModel;
+		return static::$userModel;
 	}
 }
 
