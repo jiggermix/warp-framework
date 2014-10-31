@@ -5,7 +5,7 @@
  * @description Base interface for all exceptions
  */
 
-namespace Warp\Utils\Exceptions;
+namespace Warp\Utils\Interfaces;
 
 interface IException
 {
