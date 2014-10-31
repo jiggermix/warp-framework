@@ -7,7 +7,7 @@
 
 namespace Warp\Utils\Abstracts;
 
-use Warp\Utils\Interfaces;
+use Warp\Utils\Interfaces\IException;
 
 abstract class CustomException extends \Exception implements IException
 {
@@ -20,9 +20,9 @@ abstract class CustomException extends \Exception implements IException
 
     public function __construct($message = null, $code = 0)
     {
-        if (!$message) {
+        if (!$message)
             throw new $this("Unknown ". get_class($this));
-        }
+        
         parent::__construct($message, $code);
     }
     
