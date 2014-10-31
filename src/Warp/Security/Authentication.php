@@ -44,6 +44,9 @@ class Authentication
 			if($credential == "password")
 				$value = Security::Hash($value);
 
+			if(substr($credential, 0, 1) == "#")				
+				$value = Security::Hash($value);
+
 			$query->WhereEqualTo($credential, $value);
 		}
 
@@ -80,7 +83,7 @@ class Authentication
 		static::$userModel = null;
 
 		foreach($user->GetFields() as $field => $details)
-				Session::Delete(self::USER_PREFIX.strtoupper($field));
+			Session::Delete(self::USER_PREFIX.strtoupper($field));
 
 		Session::Delete(self::TOKEN);
 	}
