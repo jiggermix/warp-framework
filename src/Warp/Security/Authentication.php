@@ -8,7 +8,7 @@
 
 namespace Warp\Security;
 
-use Warp\Utils\Enumeration\SystemField;
+use Warp\Utils\Enumerations\SystemField;
 use Warp\Utils\Exceptions\InvalidCredentialsException;
 use Warp\Utils\Exceptions\PasswordNotFoundException;
 use Warp\Utils\Exceptions\UserNotFoundException;
