@@ -9,6 +9,9 @@
 namespace Warp\Security;
 
 use Warp\Utils\Enumeration\SystemField;
+use Warp\Utils\Exceptions\InvalidCredentialsException;
+use Warp\Utils\Exceptions\PasswordNotFoundException;
+use Warp\Utils\Exceptions\UserNotFoundException;
 use Warp\Session\Session;
 
 class Authentication
@@ -46,16 +49,16 @@ class Authentication
 
 		$result = $query->First();
 
-		if(!$credentials["password"])
-			throw new \Exception("Password is required");
-
-		if(!$result) throw new \Exception("Invalid login credentials");
+		if(!$result) throw new InvalidCredentialsException();
 
 		return $result;
 	}
 
 	public static function LogIn($credentials)
 	{
+		if(!$credentials["password"])
+			throw new PasswordNotFoundException();
+
 		$user = static::Validate($credentials);
 
 		if($user)
@@ -68,7 +71,7 @@ class Authentication
 			return true;
 		}
 		else
-			throw new \Exception("The specified user does not exist");
+			throw new UserNotFoundException();
 	}
 
 	public static function LogOut()

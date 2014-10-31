@@ -58,8 +58,8 @@ class APIStatus
 {
 	const Success = 200;
 	const Unknown = 404;
-	const Invalid = 405;
-	const Blank = 406;
+	const Invalid = 400;
+	const Blank = 204;
 }
 
 class APIMessage
