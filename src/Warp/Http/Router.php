@@ -256,9 +256,9 @@ class Router
 
 				switch($pattern["options"]["before"])
 				{
-					case "auth":
+					case "auth.active":
 						$valid = Authentication::User() ? true : false;
-						
+
 						if($pattern["options"]["failed"]) Navigate::within($pattern["options"]["failed"]);
 					break;
 				}
