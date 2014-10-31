@@ -7,6 +7,8 @@
 
 namespace Warp\Utils\Exceptions;
 
+use Warp\Utils\Abstracts\CustomException;
+
 class AuthenticationException extends CustomException 
 {
 	protected $message = "Authentication failed";
