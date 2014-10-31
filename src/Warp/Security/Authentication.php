@@ -26,6 +26,11 @@ class Authentication
 		return static::$userModel;
 	}
 
+	public static function SetModel($model)
+	{
+		static::$user = $model;
+	}
+
 	public static function Validate($credentials)
 	{
 		$query = static::getUserModel()->GetQuery();
