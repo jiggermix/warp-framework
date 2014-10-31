@@ -29,6 +29,7 @@ class Authentication
 	public static function Validate($credentials)
 	{
 		$query = static::getUserModel()->GetQuery();
+		$query->WhereIsNull(SystemField::DeletedAt);
 
 		foreach($credentials as $credential => $value)
 		{
