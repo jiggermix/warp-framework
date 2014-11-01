@@ -16,8 +16,6 @@ trait CrudViewTrait
 	const DELETE_FILE = "delete.php";
 	const PAGE_FILE = "default.php";
 	const NUMBER_PATTERN = "[1-9][0-9]*";
-	protected static $model;
-	protected $viewData;
 	protected $crudFile;
 		
 	public function Crud($type, $parameters=null)
