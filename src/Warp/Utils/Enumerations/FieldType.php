@@ -12,6 +12,7 @@ class FieldType
 {
 	const String = "string";
 	const Float = "float";
+	const Decimal = "decimal";
 	const Integer = "integer";
 	const Timestamp = "timestamp";
 	const Date = "date";

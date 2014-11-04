@@ -169,6 +169,13 @@ class Field
 		return $this;
 	}
 
+	public function Decimal()
+	{
+		$this->Type(FieldType::Decimal);
+		$this->Input(InputType::Decimal);		
+		return $this;
+	}
+
 	public function DateTime()
 	{
 		$this->Type(FieldType::DateTime);
