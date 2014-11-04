@@ -98,10 +98,7 @@ class Table
 		}
 
 		$fields = implode(" ", $listFields);
-
-		$query = "ALTER TABLE {$name} {$fields}";
-		Database::Execute($query);
-
+		
 		if(count($this->indices) > 0)
 		{
 			$queryIndex = array();
@@ -115,6 +112,9 @@ class Table
 
 			Database::ExecuteAll($queryIndex);
 		}
+
+		$query = "ALTER TABLE {$name} {$fields}";
+		Database::Execute($query);
 	}
 
 	public function Drop()
