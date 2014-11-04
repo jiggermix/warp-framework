@@ -56,12 +56,13 @@ class Table
 		if(count($this->indices) > 0)
 		{
 			$queryIndex = array();
-			$queryParams = array();
 
 			foreach($this->indices as $index)
 			{
-				$queryIndex[] = "CREATE INDEX index_{$index} ON {$name}($index);";
-				$queryParams[] = array();
+				$queryIndex[] = array(
+					"statement" => "CREATE INDEX index_{$index} ON {$name}($index)",
+					"parameters" => array()
+				);
 			}	
 
 			Database::ExecuteAll($queryIndex);
@@ -102,12 +103,13 @@ class Table
 		if(count($this->indices) > 0)
 		{
 			$queryIndex = array();
-			$queryParams = array();
 
 			foreach($this->indices as $index)
 			{
-				$queryIndex[] = "CREATE INDEX index_{$index} ON {$name}($index);";
-				$queryParams[] = array();
+				$queryIndex[] = array(
+					"statement" => "CREATE INDEX index_{$index} ON {$name}($index)",
+					"parameters" => array()
+				);
 			}	
 
 			Database::ExecuteAll($queryIndex);
