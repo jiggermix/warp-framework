@@ -98,7 +98,7 @@ class Table
 		}
 
 		$fields = implode(" ", $listFields);
-		
+
 		if(count($this->indices) > 0)
 		{
 			$queryIndex = array();
@@ -167,6 +167,7 @@ class Table
 	public function Foreign($field, $reference, $on, $options=null)
 	{
 		$this->fields[$field]["options"] = array("FOREIGN", $reference, $on, $options);
+		$this->Index($field);
 
 		return $this;
 	}
