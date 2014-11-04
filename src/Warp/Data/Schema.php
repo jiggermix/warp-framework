@@ -128,7 +128,7 @@ class Table
 		return $this;
 	}
 
-	public function Foreign($field, $reference, $on, $onDelete)
+	public function Foreign($field, $reference, $on, $onDelete=null)
 	{
 		$this->fields[$field]["options"] = array("FOREIGN", $reference, $on, $onDelete);
 
