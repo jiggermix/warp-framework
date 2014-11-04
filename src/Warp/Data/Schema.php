@@ -55,12 +55,16 @@ class Table
 
 		if(count($this->indices) > 0)
 		{
-			$queryIndex = "ALTER TABLE {$name}";
+			$queryIndex = array();
+			$queryParams = array();
 
 			foreach($this->indices as $index)
-				$queryIndex .= " ADD INDEX index_{$index} ON {$name}($index)";
+			{
+				$queryIndex[] = "CREATE INDEX index_{$index} ON {$name}($index);";
+				$queryParams[] = array();
+			}	
 
-			Database::Execute($queryIndex);
+			Database::ExecuteAll($queryIndex);
 		}
 	}
 
@@ -97,6 +101,20 @@ class Table
 
 		$query = "ALTER TABLE {$name} {$fields}";
 		Database::Execute($query);
+
+		if(count($this->indices) > 0)
+		{
+			$queryIndex = array();
+			$queryParams = array();
+
+			foreach($this->indices as $index)
+			{
+				$queryIndex[] = "CREATE INDEX index_{$index} ON {$name}($index);";
+				$queryParams[] = array();
+			}	
+
+			Database::ExecuteAll($queryIndex);
+		}
 	}
 
 	public function Drop()
