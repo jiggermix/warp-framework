@@ -66,6 +66,8 @@ class Table
 				$listFields[] = "DROP INDEX unique_{$field}";
 			else if($details["options"][0] == "UNIQUE")
 				$listFields[] = "ADD CONSTRAINT unique_{$field} UNIQUE ($field)";
+			else if($details["options"][0] == "FOREIGN")
+				$listFields[] = "FOREIGN KEY ({$field}) REFERENCES {$details["options"][1]}({$details["options"][2]})";
 			else
 			{
 				if($details["options"]) $options = implode(" ", $details["options"]);
@@ -105,7 +107,6 @@ class Table
 
 	public function Delete($field)
 	{
-		$this->Key($field);
 		$this->fields[$field] = array(
 			"options" => array("DELETE")
 		);
@@ -120,6 +121,13 @@ class Table
 			"type" => "INT({$size})",
 			"options" => array("AUTO_INCREMENT")
 		);
+
+		return $this;
+	}
+
+	public function Foreign($field, $reference, $on)
+	{
+		$this->fields[$field]["options"] = array("FOREIGN", $reference, $on);
 
 		return $this;
 	}
