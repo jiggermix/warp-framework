@@ -23,7 +23,7 @@ class Table
 	private $name;
 	private $key;
 	private $fields = array();
-	private $indeces = array();
+	private $indices = array();
 
 	public function __construct($name)
 	{
@@ -53,11 +53,11 @@ class Table
 		$query = "CREATE TABLE {$name} ({$fields})";
 		Database::Execute($query);	
 
-		if(count($this->indeces) > 0)
+		if(count($this->indices) > 0)
 		{
 			$queryIndex = "ALTER TABLE {$name}";
 
-			foreach($this->indeces as $index)
+			foreach($this->indices as $index)
 				$queryIndex .= " ADD INDEX index_{$index} ON {$name}($index)";
 
 			Database::Execute($queryIndex);
@@ -143,7 +143,7 @@ class Table
 
 	public function Index($field)
 	{
-		$this->indeces[] = $field;
+		$this->indices[] = $field;
 	}
 
 	public function Foreign($field, $reference, $on, $options=null)
