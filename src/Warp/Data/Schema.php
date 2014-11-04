@@ -23,6 +23,7 @@ class Table
 	private $name;
 	private $key;
 	private $fields = array();
+	private $indeces = array();
 
 	public function __construct($name)
 	{
@@ -50,7 +51,17 @@ class Table
 			$fields .= ", PRIMARY KEY ({$this->key})";
 
 		$query = "CREATE TABLE {$name} ({$fields})";
-		Database::Execute($query);
+		Database::Execute($query);	
+
+		if(count($this->indeces) > 0)
+		{
+			$queryIndex = "ALTER TABLE {$name}";
+
+			foreach($this->indeces as $index)
+				$queryIndex .= " ADD INDEX index_{$index} ON {$name}($index)";
+
+			Database::Execute($queryIndex);
+		}
 	}
 
 	public function Alter()
@@ -128,6 +139,11 @@ class Table
 		);
 
 		return $this;
+	}
+
+	public function Index($field)
+	{
+		$this->indeces[] = $field;
 	}
 
 	public function Foreign($field, $reference, $on, $options=null)
