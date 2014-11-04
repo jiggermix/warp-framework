@@ -98,7 +98,7 @@ class Table
 			}
 		}
 
-		$fields = implode(" ", $listFields);
+		$fields = implode(", ", $listFields);
 
 		if(count($this->indices) > 0)
 		{
