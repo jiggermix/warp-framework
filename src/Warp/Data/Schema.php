@@ -122,7 +122,7 @@ class Table
 	public function Drop()
 	{
 		$name = $this->name;
-		$query = "DROP TABLE {$name}";
+		$query = "SET FOREIGN_KEY_CHECKS=0; DROP TABLE {$name}";
 		Database::Execute($query);
 	}
 
