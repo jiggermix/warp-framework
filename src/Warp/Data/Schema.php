@@ -67,7 +67,10 @@ class Table
 			else if($details["options"][0] == "UNIQUE")
 				$listFields[] = "ADD CONSTRAINT unique_{$field} UNIQUE ($field)";
 			else if($details["options"][0] == "FOREIGN")
-				$listFields[] = "FOREIGN KEY ({$field}) REFERENCES {$details["options"][1]}({$details["options"][2]})";
+				$listFields[] = "ADD FOREIGN KEY ({$field}) REFERENCES {$details["options"][1]}({$details["options"][2]})";
+			else if($details["options"][0] == "FOREIGN_DELETE")
+				$listFields[] = "ADD FOREIGN KEY ({$field}) REFERENCES {$details["options"][1]}({$details["options"][2]})
+								ON DELETE {$details["options"][3]}";
 			else
 			{
 				if($details["options"]) $options = implode(" ", $details["options"]);
@@ -125,9 +128,15 @@ class Table
 		return $this;
 	}
 
-	public function Foreign($field, $reference, $on)
+	public function Foreign($field, $reference, $on, $onDelete)
 	{
-		$this->fields[$field]["options"] = array("FOREIGN", $reference, $on);
+		$this->fields[$field]["options"] = array("FOREIGN", $reference, $on, $onDelete);
+
+		if($onDelete)
+		{
+			$this->fields[$field]["options"][0] = "FOREIGN_DELETE";
+			$this->fields[$field]["options"][] = $onDelete;
+		}
 
 		return $this;
 	}
