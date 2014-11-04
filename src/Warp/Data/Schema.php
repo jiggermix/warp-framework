@@ -234,6 +234,15 @@ class Table
 		return $this;
 	}
 
+	public function Decimal($field, $size=14.2)
+	{
+		$this->fields[$field] = array(
+			"type" => "DECIMAL({$size})"
+		);
+
+		return $this;
+	}
+
 	public function Boolean($field)
 	{
 		$this->fields[$field] = array(
