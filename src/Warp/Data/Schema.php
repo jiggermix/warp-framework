@@ -83,12 +83,12 @@ class Table
 			else if($details["options"][0] == "UNIQUE")
 				$listFields[] = "ADD CONSTRAINT unique_{$field} UNIQUE ($field)";
 			else if($details["options"][0] == "FOREIGN")
-				$listFields[] = "ADD CONSTRAINT foreign_{$name}_{$field} 
+				$listFields[] = "ADD CONSTRAINT foreign_{$field} 
 								FOREIGN KEY ({$field}) 
 								REFERENCES {$details["options"][1]}({$details["options"][2]})
 								{$details["options"][3]}";
 			else if($details["options"][0] == "DELETE_FOREIGN")
-				$listFields[] = "DROP CONSTRAINT foreign_{$name}_{$field}";
+				$listFields[] = "DROP CONSTRAINT foreign_{$field}";
 			else
 			{
 				if($details["options"]) $options = implode(" ", $details["options"]);
