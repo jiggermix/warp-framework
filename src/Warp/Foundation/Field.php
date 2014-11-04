@@ -172,7 +172,7 @@ class Field
 	public function Decimal()
 	{
 		$this->Type(FieldType::Decimal);
-		$this->Input(InputType::Decimal);		
+		$this->Input(InputType::Float);		
 		return $this;
 	}
 
