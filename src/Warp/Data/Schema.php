@@ -166,7 +166,7 @@ class Table
 		$this->indices[] = $field;
 	}
 
-	public function Foreign($field, $reference, $on, $options=null)
+	public function Foreign($field, $reference, $on, $options="ON DELETE SET NULL")
 	{
 		$this->fields[$field]["options"] = array("FOREIGN", $reference, $on, $options);
 		$this->Index($field);
