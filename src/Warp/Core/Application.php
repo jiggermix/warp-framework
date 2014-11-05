@@ -143,6 +143,8 @@ class Application
 	{
 		$configuration .= "Config";
 		$this->environments[$environment] = new $configuration;
+
+		return $this;
 	}
 	
 	public function SetDatabase($name)
