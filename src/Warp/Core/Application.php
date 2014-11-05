@@ -17,27 +17,13 @@ use Warp\Utils\Enumerations\DebugMode;
 class Application
 {
 	protected static $instance;
-	protected $title;
-	protected $subtitle;
-	protected $description;
-	protected $keywords;
+	protected static $meta;
+	protected static $environment;
 	protected $debugMode;
-	protected $directory;
-	protected $environments = array();
 	
 	private function __construct() {}
 
-	public static function GetInstance()
-	{
-		return static::$instance;
-	}
-
-	public static function Instance()
-	{
-		return static::GetInstance();
-	}
-	
-	public static function Initialize()
+	protected static function initialize()
 	{		
 		static::$instance = new Application;
 		static::GetInstance()->SetTimezone("UTC");
@@ -45,6 +31,27 @@ class Application
 		Session::Start();
 
 		return static::$instance;
+	}
+
+	public static function GetInstance()
+	{
+		if(!static::$instance) static::initialize();
+
+		return static::$instance;
+	}
+
+	public static function Meta()
+	{
+		if(!static::$meta) static::$meta = new ApplictionMeta();
+
+		return static::$meta;
+	}
+
+	public static function Environment()
+	{
+		if(!static::$environment) static::$environment = new ApplicationEnvironment();
+
+		return static::$environment;
 	}
 	
 	public function SetTimezone($timezone)
@@ -62,75 +69,6 @@ class Application
 	public function GetPath()
 	{
 		return Router::GetPath();
-	}
-	
-	public function SetTitle($title)
-	{
-		$this->title = $title;
-		return $this;
-	}
-	
-	public function GetTitle()
-	{
-		return $this->title;
-	}
-
-	public function Title($title=null)
-	{
-		return $title? $this->SetTitle($title) : $this->GetTitle();
-	}
-	
-	public function SetSubtitle($subtitle)
-	{
-		$this->subtitle = $subtitle;
-		return $this;
-	}
-	
-	public function GetSubtitle()
-	{
-		return $this->subtitle;
-	}
-
-	public function Subtitle($subtitle=null)
-	{
-		return $subtitle? $this->SetSubtitle($title) : $this->GetSubtitle();
-	}
-	
-	public function SetDescription($description)
-	{
-		$this->description = $description;
-		return $this;
-	}
-	
-	public function GetDescription()
-	{	
-		return $this->description;
-	}
-
-	public function Description($description=null)
-	{
-		return $description? $this->SetDescription($description) : $this->GetDescription();
-	}
-	
-	public function SetKeywords($keywords)
-	{
-		$this->keywords = implode(",", $keywords);
-		return $this;
-	}
-	
-	public function GetKeywords()
-	{
-		return $this->keywords;
-	}
-	
-	public function GetKeywordsList()
-	{
-		return explode(",", $this->keywords);
-	}
-
-	public function Keywords($keywords=null)
-	{
-		return $keywords? $this->SetKeywords($keywords) : $this->GetKeywords();
 	}
 	
 	public function SetDebugMode($debugMode)
@@ -163,17 +101,11 @@ class Application
 	
 	protected function setConfiguration()
 	{
-		$configuration = $this->environments[Router::GetServer()];
+		$configuration = $this->environment->Get(Router::GetServer());
+
+		if(!$configuration) throw new \Exception("Error: Unknown environment");
+
 		$configuration->Apply();
-
-		return $this;
-	}
-
-	public function AddEnvironment($environment, $configuration)
-	{
-		$configuration .= "Config";
-		$this->environments[$environment] = new $configuration;
-
 		return $this;
 	}
 	
@@ -183,11 +115,11 @@ class Application
 		return $this;
 	}
 	
-	public function Start()
+	public static function Start()
 	{
 		try
 		{
-			$this->setConfiguration();
+			static::GetInstance()->setConfiguration();
 			Reference::Import("route", "routes");
 			Reference::Import("resource", "resources");
 
@@ -202,6 +134,108 @@ class Application
 
 			echo Debugger::WriteError($ex->getMessage() . $trace);
 		}
+	}
+}
+
+class ApplicationMeta
+{
+	protected $title;
+	protected $subtitle;
+	protected $description;
+	protected $keywords;
+	
+	private function __construct() {}
+
+	public function SetTitle($title)
+	{
+		$this->title = $title;
+		return $this;
+	}
+	
+	public function GetTitle()
+	{
+		return $this->title;
+	}
+
+	public function SetSubtitle($subtitle)
+	{
+		$this->subtitle = $subtitle;
+		return $this;
+	}
+	
+	public function GetSubtitle()
+	{
+		return $this->subtitle;
+	}
+
+	public function SetDescription($description)
+	{
+		$this->description = $description;
+		return $this;
+	}
+	
+	public function GetDescription()
+	{	
+		return $this->description;
+	}
+
+	public function SetKeywords($keywords)
+	{
+		$this->keywords = implode(",", $keywords);
+		return $this;
+	}
+	
+	public function GetKeywords()
+	{
+		return $this->keywords;
+	}
+	
+	public function GetKeywordsList()
+	{
+		return explode(",", $this->keywords);
+	}
+
+	public function Title($title=null)
+	{
+		return $title? $this->SetTitle($title) : $this->GetTitle();
+	}
+	
+	public function Subtitle($subtitle=null)
+	{
+		return $subtitle? $this->SetSubtitle($title) : $this->GetSubtitle();
+	}
+
+	public function Description($description=null)
+	{
+		return $description? $this->SetDescription($description) : $this->GetDescription();
+	}
+
+	public function Keywords($keywords=null)
+	{
+		return $keywords? $this->SetKeywords($keywords) : $this->GetKeywords();
+	}
+
+	public function KeywordsList()
+	{
+		return $this->GetKeywordsList();
+	}
+}
+
+class ApplicationEnvironment
+{
+	protected $environments = array();
+
+	public function Add($environment, $configuration)
+	{
+		$configuration .= "Config";
+		$this->environments[$environment] = new $configuration;
+
+		return $this;
+	}
+
+	public function Get($environment)
+	{
+		return $this->environments[$environment];
 	}
 }
 
