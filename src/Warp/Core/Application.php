@@ -101,7 +101,7 @@ class Application
 	
 	protected function setConfiguration()
 	{
-		$configuration = $this->environment->Get(Router::GetServer());
+		$configuration = static::$environment->Get(Router::GetServer());
 
 		if(!$configuration) throw new \Exception("Error: Unknown environment");
 
@@ -143,7 +143,7 @@ class ApplicationMeta
 	protected $subtitle;
 	protected $description;
 	protected $keywords;
-	
+
 	public function SetTitle($title)
 	{
 		$this->title = $title;
