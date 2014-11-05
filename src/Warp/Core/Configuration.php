@@ -14,6 +14,11 @@ use Warp\Data\DatabaseConfiguration;
 
 class Configuration
 {
+	public function SetPath($path)
+	{
+		Application::GetInstance()->SetPath($path);
+	}
+
 	public function SetDebugMode($debugMode)
 	{
 		Application::GetInstance()->SetDebugMode($debugMode);
