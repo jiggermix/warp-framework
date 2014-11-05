@@ -31,6 +31,11 @@ class Application
 	{
 		return static::$instance;
 	}
+
+	public static function Instance()
+	{
+		return static::GetInstance();
+	}
 	
 	public static function Initialize()
 	{		
@@ -69,6 +74,11 @@ class Application
 	{
 		return $this->title;
 	}
+
+	public function Title($title=null)
+	{
+		return $title? $this->SetTitle($title) : $this->GetTitle();
+	}
 	
 	public function SetSubtitle($subtitle)
 	{
@@ -80,6 +90,11 @@ class Application
 	{
 		return $this->subtitle;
 	}
+
+	public function Subtitle($subtitle=null)
+	{
+		return $subtitle? $this->SetSubtitle($title) : $this->GetSubtitle();
+	}
 	
 	public function SetDescription($description)
 	{
@@ -90,6 +105,11 @@ class Application
 	public function GetDescription()
 	{	
 		return $this->description;
+	}
+
+	public function Description($description=null)
+	{
+		return $description? $this->SetDescription($description) : $this->GetDescription();
 	}
 	
 	public function SetKeywords($keywords)
@@ -106,6 +126,11 @@ class Application
 	public function GetKeywordsList()
 	{
 		return explode(",", $this->keywords);
+	}
+
+	public function Keywords($keywords=null)
+	{
+		return $keywords? $this->SetKeywords($keywords) : $this->GetKeywords();
 	}
 	
 	public function SetDebugMode($debugMode)
@@ -129,6 +154,11 @@ class Application
 	public function GetDebugMode()
 	{
 		return $this->debugMode;
+	}
+
+	public function DebugMode($mode)
+	{
+		return $mode? $this->SetDebugMode($mode) : $this->GetDebugMode();
 	}
 	
 	protected function setConfiguration()
