@@ -123,7 +123,8 @@ class Application
 			Reference::Import("route", "routes");
 			Reference::Import("resource", "resources");
 
-			echo Router::Fetch();
+			$response = Router::Fetch();
+			echo $response;
 		}
 		catch (\Exception $ex)
 		{
