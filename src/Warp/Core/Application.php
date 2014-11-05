@@ -144,8 +144,6 @@ class ApplicationMeta
 	protected $description;
 	protected $keywords;
 	
-	private function __construct() {}
-
 	public function SetTitle($title)
 	{
 		$this->title = $title;
