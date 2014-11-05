@@ -141,7 +141,7 @@ class Application
 
 	public function AddEnvironment($environment, $configuration)
 	{
-		$this->environments[$environment] = new $configuration;
+		$this->environments[$environment] = new $configuration."Config";
 	}
 	
 	public function SetDatabase($name)
