@@ -94,7 +94,7 @@ class Application
 		return $this->debugMode;
 	}
 
-	public function DebugMode($mode)
+	public function DebugMode($mode=null)
 	{
 		return $mode? $this->SetDebugMode($mode) : $this->GetDebugMode();
 	}
@@ -200,7 +200,7 @@ class ApplicationMeta
 	
 	public function Subtitle($subtitle=null)
 	{
-		return $subtitle? $this->SetSubtitle($title) : $this->GetSubtitle();
+		return $subtitle? $this->SetSubtitle($subtitle) : $this->GetSubtitle();
 	}
 
 	public function Description($description=null)
