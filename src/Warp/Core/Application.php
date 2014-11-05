@@ -42,7 +42,7 @@ class Application
 
 	public static function Meta()
 	{
-		if(!static::$meta) static::$meta = new ApplictionMeta();
+		if(!static::$meta) static::$meta = new ApplicationMeta();
 
 		return static::$meta;
 	}
