@@ -23,6 +23,7 @@ class Application
 	protected $keywords;
 	protected $debugMode;
 	protected $directory;
+	protected $environments = array();
 	
 	private function __construct() {}
 
@@ -130,11 +131,17 @@ class Application
 		return $this->debugMode;
 	}
 	
-	public function SetConfiguration($configuration)
+	protected function setConfiguration()
 	{
+		$configuration = $this->environments[Router::GetServer()];
 		$configuration->Apply();
 
 		return $this;
+	}
+
+	public function AddEnvironment($environment, $configuration)
+	{
+		$this->environments[$environment] = new $configuration;
 	}
 	
 	public function SetDatabase($name)
@@ -147,6 +154,7 @@ class Application
 	{
 		try
 		{
+			$this->setConfiguration();
 			Reference::Import("route", "routes");
 			Reference::Import("resource", "resources");
 
