@@ -226,7 +226,7 @@ class ApplicationEnvironment
 
 	public function Add($environment, $configuration)
 	{
-		$configuration .= "Config";
+		$configuration .= "Configuration";
 		$this->environments[$environment] = new $configuration;
 
 		return $this;

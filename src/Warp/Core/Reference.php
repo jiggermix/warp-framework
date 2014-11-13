@@ -34,7 +34,7 @@ class Reference
 		$modelExists 			= strpos($name,"Model") > 0 && static::fileExists("model", $name);
 		$controllerExists 		= strpos($name,"Controller") > 0 && static::fileExists("controller", $name);
 		$viewExists 			= strpos($name,"View") > 0 && static::fileExists("view", $name);
-		$configurationExists 	= strpos($name,"Config") > 0 && static::fileExists("configuration", $name);
+		$configurationExists 	= strpos($name,"Configuration") > 0 && static::fileExists("configuration", str_replace("Configuration", "", $name));
 		$migrationExists 		= strncmp("migration", $name, strlen("migration")) == 0 && static::fileExists("migration", $name);
 		
 		if($classExists) 				static::Import("class", $name);
