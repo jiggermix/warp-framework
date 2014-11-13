@@ -234,7 +234,10 @@ class ApplicationEnvironment
 
 	public function Get($environment)
 	{
-		return $this->environments[$environment];
+		if(array_key_exists($environment, $this->environments))
+			return $this->environments[$environment];
+		else
+			return false;
 	}
 }
 
