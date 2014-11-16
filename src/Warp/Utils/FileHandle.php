@@ -27,6 +27,11 @@ class FileHandle
 		unlink($path."/".$name);
 	}
 
+	public function Read()
+	{
+		return fread($this->handle);
+	}
+
 	public function Write($text)
 	{
 		fwrite($this->handle, $text);

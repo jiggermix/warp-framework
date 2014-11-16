@@ -22,9 +22,12 @@ class Reference
 		require_once static::$directory[$reference]."{$name}.php";
 	}
 
-	public static function Path($key, $directory)
+	public static function Path($key, $directory=null)
 	{
-		static::$directory[$key] = $directory;
+		if($directory)
+			static::$directory[$key] = $directory;
+		else
+			return static::$directory[$key];
 	}	
 	
 	public static function Autoload($name)
