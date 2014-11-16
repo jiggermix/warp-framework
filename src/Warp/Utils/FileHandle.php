@@ -34,6 +34,11 @@ class FileHandle
 		return fread($this->handle, filesize($this->filename));
 	}
 
+	public function Contents()
+	{
+		return file_get_contents($this->filename);
+	}
+
 	public function Write($text)
 	{
 		fwrite($this->handle, $text);
