@@ -35,6 +35,10 @@ class Slang
 			$file = new FileHandle(static::$locale . "/default.json", $directory);
 			$contents = (array) json_decode($file->Contents());
 			$file->Close();
+
+			foreach($contents as $key => $value)
+				$contents[$key] = (array) $value;
+
 			static::$translator = $contents;
 		}
 
@@ -44,7 +48,7 @@ class Slang
 			if(!$options)
 				if(is_array(static::$translator[$key]))
 						if(count(static::$translator[$key]) > 0)
-							return static::$translator[$key][0];
+							return static::$translator[$key][array_keys(static::$translator[$key])[0]];
 						else
 							return null;
 					else
@@ -55,7 +59,7 @@ class Slang
 				else
 					if(is_array(static::$translator[$key]))
 						if(count(static::$translator[$key]) > 0)
-							return static::$translator[$key][0];
+							return static::$translator[$key][array_keys(static::$translator[$key])[0]];
 						else
 							return null;
 					else
