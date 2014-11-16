@@ -27,7 +27,7 @@ class Slang
 		static::$locale = $locale;
 	}
 
-	public static function For($key, $options=null)
+	public static function Of($key, $options=null)
 	{
 		if(!static::$translator)
 		{
