@@ -11,10 +11,12 @@ namespace Warp\Utils;
 class FileHandle
 {
 	protected $handle;
+	protected $filename;
 
 	public function __construct($name, $path=null)
 	{
-		$this->handle = fopen($path."/".$name, "a");
+		$this->filename = $path."/".$name;
+		$this->handle = fopen($this->filename, "a");
 	}
 
 	public static function Exists($name, $path)
@@ -29,7 +31,7 @@ class FileHandle
 
 	public function Read()
 	{
-		return fread($this->handle);
+		return fread($this->handle, filesize($this->filename));
 	}
 
 	public function Write($text)
