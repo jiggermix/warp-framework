@@ -33,7 +33,7 @@ class Slang
 		{
 			$directory = Reference::Path("resource")  . "slang";
 			$file = new FileHandle(static::$locale . "/default.json", $directory);
-			$contents = (array) json_decode($file->Read());
+			$contents = (array) json_decode($file->Contents());
 			$file->Close();
 			static::$translator = $contents;
 		}
