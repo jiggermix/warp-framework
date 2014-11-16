@@ -41,7 +41,13 @@ class Slang
 			return null;
 		else
 			if(!$options)
-				return static::$translator[$key];
+				if(is_array(static::$translator[$key]))
+						if(count(static::$translator[$key]) > 0)
+							return static::$translator[$key][0];
+						else
+							return null;
+					else
+						return static::$translator[$key];
 			else
 				if(array_key_exists($options, static::$translator[$key]))
 					return static::$translator[$key][$options];
