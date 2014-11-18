@@ -54,7 +54,7 @@ trait CrudViewTrait
 		$path = static::GetPath();
 
 		if($this->crudFile) 
-			return static::GetViewFile($layout, $path, self::PAGE_FILE, $this->crudFile, $this->viewData);
+			return static::GetViewFile($layout, $path, static::$PAGE_FILE, $this->crudFile, $this->viewData);
 		
 		return parent::Render();
 	}
