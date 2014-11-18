@@ -225,7 +225,7 @@ class Router
 
 	public static function Crud($base, $controller, $options=array())
 	{
-		static::Get("user", "UserController", $options);
+		static::Get($base, "{$controller}Controller", $options);
 
 		static::Group("{$base}/", function() use ($controller)
 		{
