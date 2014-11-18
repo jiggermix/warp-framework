@@ -12,6 +12,7 @@ use Warp\Foundation\ViewData;
 
 trait CrudViewTrait
 {
+	protected static $INDEX_FILE = "index.php";
 	protected static $CREATE_FILE = "add.php";
 	protected static $READ_FILE = "view.php";
 	protected static $UPDATE_FILE = "edit.php";
@@ -42,6 +43,10 @@ trait CrudViewTrait
 				$model->Fetch();			
 
 				$viewData->Model = $model;
+			break;
+
+			default:
+				$this->crudFile = static::$INDEX_FILE;
 			break;
 		}
 
