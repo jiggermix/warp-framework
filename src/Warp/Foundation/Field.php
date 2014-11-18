@@ -213,4 +213,11 @@ class Field
 
 		return $this;
 	}
+
+	public function Required()
+	{
+		$modelName = $this->model;
+		$modelName::SetOption($this->name, "required", true);
+		return $this;
+	}
 }
