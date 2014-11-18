@@ -31,8 +31,8 @@ class Slang
 	{
 		if(!static::$translator)
 		{
-			$directory = Reference::Path("resource")  . "slang";
-			$file = new FileHandle(static::$locale . "/default.json", $directory);
+			$directory = Reference::Path("resource")  . "slang/" . static::$locale;
+			$file = new FileHandle("default.json", $directory);
 			$contents = (array) json_decode($file->Contents());
 			$file->Close();
 
