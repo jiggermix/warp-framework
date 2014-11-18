@@ -41,7 +41,7 @@ class Fragment implements IElement
 	{
 		$data = $this->data;
 		
-		include Reference::Path("page") . $this->path . "/fragments/" . $this->file . ".php";
+		include Reference::Path("page") . $this->file . ".php";
 	}
 }
 
