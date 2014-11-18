@@ -19,6 +19,7 @@ trait CrudViewTrait
 	protected static $DELETE_FILE = "delete.php";
 	protected static $PAGE_FILE = "default.php";
 	protected static $NUMBER_PATTERN = "[1-9][0-9]*";
+	protected $viewData;
 	protected $crudFile;
 		
 	public function Crud($type, $parameters=null)
@@ -46,9 +47,16 @@ trait CrudViewTrait
 			break;
 
 			default:
+				$viewData = new ViewData();
+				$modelName = "\\" . static::$model;
+				$model = new $modelName;
+				$viewData->Model = $model;
+				$viewData->Rows = $model->GetQuery()->Find();
 				$this->crudFile = static::$INDEX_FILE;
 			break;
 		}
+
+		$this->viewData = $viewData;
 
 		return $this;
 	}
