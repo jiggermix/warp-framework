@@ -230,6 +230,8 @@ class Router
 			Router::Any("edit/int:id", 		"{$controller}Controller@Update", $options);
 			Router::Any("delete/int:id",	"{$controller}Controller@Destroy", $options);
 		});
+
+		Router::Any("$base", "{$controller}Controller", $options);
 	}
 
 	public static function Fetch()
