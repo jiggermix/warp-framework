@@ -186,12 +186,14 @@ class Router
 
 	public static function Get($route, $action, $options=array())
 	{
-		static::Add($route, $action, array_merge(array("type" => "GET"), $options));
+		$options["type"] = "GET";
+		static::Add($route, $action, $options);
 	}
 
 	public static function Post($route, $action, $options=array())
 	{
-		static::Add($route, $action, array_merge(array("type" => "POST"), $options));
+		$options["type"] = "POST";
+		static::Add($route, $action, $options);
 	}
 
 	public static function None($class)
@@ -221,16 +223,16 @@ class Router
 		static::$prefix = null;
 	}
 
-	public static function Crud($base, $controller, $options=null)
+	public static function Crud($base, $controller, $options=array())
 	{
-		Router::Any($base, "{$controller}Controller", $options);
+		static::Get("user", "UserController", $options);
 
-		Router::Group("{$base}/", function() use ($controller)
+		static::Group("{$base}/", function() use ($controller)
 		{
-			Router::Any("add", 				"{$controller}Controller@Create", $options);
-			Router::Any("view/int:id", 		"{$controller}Controller@Read", $options);
-			Router::Any("edit/int:id", 		"{$controller}Controller@Update", $options);
-			Router::Any("delete/int:id",	"{$controller}Controller@Destroy", $options);
+			static::Get("add", 				"{$controller}Controller@Create", $options);
+			static::Get("view/int:id", 		"{$controller}Controller@Read", $options);
+			static::Get("edit/int:id", 		"{$controller}Controller@Update", $options);
+			static::Get("delete/int:id",	"{$controller}Controller@Destroy", $options);
 		});
 	}
 
