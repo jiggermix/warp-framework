@@ -30,9 +30,10 @@ class Layout extends Page
 	public function Render()
 	{
 		$data = (object) $this->data;
+
 		if($this->page) $data->Page = $this->page;
 
-		Reference::Import("layout", $this->file);
+		include Reference::Path("layout") . $this->file . ".php";
 	}
 }
 

@@ -259,19 +259,19 @@ class Router
 					case "auth.active":
 						$valid = Authentication::User() ? true : false;
 
-						if(!$valid && $pattern["options"]["failed"]) Navigate::within($pattern["options"]["failed"]);
+						if(!$valid && $pattern["options"]["failed"]) Navigate::Within($pattern["options"]["failed"]);
 					break;
 
 					case "auth.inactive":
 						$valid = Authentication::User() ? false : true;
 
-						if(!$valid && $pattern["options"]["failed"]) Navigate::within($pattern["options"]["failed"]);
+						if(!$valid && $pattern["options"]["failed"]) Navigate::Within($pattern["options"]["failed"]);
 					break;
 
 					case "custom":
 						$action = $pattern["options"]["action"];
 
-						if(!$action()) Navigate::within($pattern["options"]["failed"]);
+						if(!$action()) Navigate::Within($pattern["options"]["failed"]);
 					break;
 				}
 

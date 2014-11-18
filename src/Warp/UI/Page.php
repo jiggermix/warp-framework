@@ -33,7 +33,7 @@ class Page extends Fragment
 
 		if($this->fragment) $data->Fragment = $this->fragment;
 
-		Reference::Import("page", $this->file);
+		include Reference::Path("page") . $this->file . ".php";
 	}
 }
 
