@@ -45,15 +45,6 @@ trait CrudViewTrait
 
 				$viewData->Model = $model;
 			break;
-
-			default:
-				$viewData = new ViewData();
-				$modelName = "\\" . static::$model;
-				$model = new $modelName;
-				$viewData->Model = $model;
-				$viewData->Rows = $model->GetQuery()->Find();
-				$this->crudFile = static::$INDEX_FILE;
-			break;
 		}
 
 		$this->viewData = $viewData;
@@ -66,7 +57,16 @@ trait CrudViewTrait
 		$layout = static::GetLayout();
 		$path = static::GetPath();
 
-		if(!$this->crudFile) $this->crudFile = "index.php";
+		if(!$this->crudFile)
+		{
+			$viewData = new ViewData();
+			$modelName = "\\" . static::$model;
+			$model = new $modelName;
+			$viewData->Model = $model;
+			$viewData->Rows = $model->GetQuery()->Find();
+			$this->crudFile = static::$INDEX_FILE;
+			$this->viewData = $viewData;
+		}
 
 		return static::GetViewFile($layout, $path, static::$PAGE_FILE, $this->crudFile, $this->viewData);
 	}
