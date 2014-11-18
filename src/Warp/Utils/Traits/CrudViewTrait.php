@@ -58,10 +58,9 @@ trait CrudViewTrait
 		$layout = static::GetLayout();
 		$path = static::GetPath();
 
-		if($this->crudFile) 
-			return static::GetViewFile($layout, $path, static::$PAGE_FILE, $this->crudFile, $this->viewData);
-		
-		return parent::Render();
+		if($this->crudFile) $this->crudFile = "index.php";
+
+		return static::GetViewFile($layout, $path, static::$PAGE_FILE, $this->crudFile, $this->viewData);
 	}
 }
 
