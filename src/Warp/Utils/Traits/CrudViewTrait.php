@@ -35,8 +35,9 @@ trait CrudViewTrait
 			case "update":
 				$this->crudFile = self::UPDATE_FILE;
 			case "destroy":
-				$this->crudFile = self::DELETE_FILE;
-				$model = new static::$model();
+				$this->crudFile = self::DELETE_FILE;				
+				$modelName = "\\" . static::$model;
+				$model = new $modelName;
 				$model->SetKeyValue($parameters["id"]);
 				$model->Fetch();			
 
