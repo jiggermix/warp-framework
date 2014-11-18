@@ -15,7 +15,7 @@ trait APIControllerTrait
 {
 	public static $HasAPI = true;
 
-	public function ViewAction($parameters)
+	public function ViewAction($parameters=null)
 	{
 		if($parameters["id"])
 		{
@@ -56,7 +56,7 @@ trait APIControllerTrait
 		}
 	}
 	
-	public function AddAction($parameters)
+	public function AddAction($parameters=null)
 	{
 		$input = Input::FromPost();
 		$model = static::GetModel();
@@ -66,7 +66,7 @@ trait APIControllerTrait
 		return json_encode(array("key" => $model->GetKeyValue()));
 	}
 	
-	public function EditAction($parameters)
+	public function EditAction($parameters=null)
 	{
 		$input = Input::FromPost();
 		$model = static::GetModel();
@@ -77,7 +77,7 @@ trait APIControllerTrait
 		return json_encode(array("key" => $model->GetKeyValue()));
 	}
 	
-	public function DeletAction($parameters)
+	public function DeletAction($parameters=null)
 	{
 		$input = Input::FromPost();
 		$model = static::GetModel();

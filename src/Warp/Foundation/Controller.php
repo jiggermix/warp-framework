@@ -37,7 +37,7 @@ class Controller
 		return new $viewName();
 	}
 	
-	public function IndexAction($parameters)
+	public function IndexAction($parameters=null)
 	{
 		return static::GetView()->Render();
 	}
