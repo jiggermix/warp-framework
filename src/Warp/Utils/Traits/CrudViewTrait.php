@@ -12,12 +12,12 @@ use Warp\Foundation\ViewData;
 
 trait CrudViewTrait
 {
-	const CREATE_FILE = "add.php";
-	const READ_FILE = "view.php";
-	const UPDATE_FILE = "edit.php";
-	const DELETE_FILE = "delete.php";
-	const PAGE_FILE = "default.php";
-	const NUMBER_PATTERN = "[1-9][0-9]*";
+	protected static CREATE_FILE = "add.php";
+	protected static READ_FILE = "view.php";
+	protected static UPDATE_FILE = "edit.php";
+	protected static DELETE_FILE = "delete.php";
+	protected static PAGE_FILE = "default.php";
+	protected static NUMBER_PATTERN = "[1-9][0-9]*";
 	protected $crudFile;
 		
 	public function Crud($type, $parameters=null)
@@ -27,15 +27,15 @@ trait CrudViewTrait
 		switch($type)
 		{
 			case "create":
-				$this->crudFile = self::CREATE_FILE;
+				$this->crudFile = static::$CREATE_FILE;
 			break;
 
 			case "read":
-				$this->crudFile = self::READ_FILE;			
+				$this->crudFile = static::$READ_FILE;			
 			case "update":
-				$this->crudFile = self::UPDATE_FILE;
+				$this->crudFile = static::$UPDATE_FILE;
 			case "destroy":
-				$this->crudFile = self::DELETE_FILE;				
+				$this->crudFile = static::$DELETE_FILE;				
 				$modelName = "\\" . static::$model;
 				$model = new $modelName;
 				$model->SetKeyValue($parameters["id"]);
@@ -52,7 +52,7 @@ trait CrudViewTrait
 	{
 		$layout = static::GetLayout();
 		$path = static::GetPath();
-				
+
 		if($this->crudFile) 
 			return static::GetViewFile($layout, $path, self::PAGE_FILE, $this->crudFile, $this->viewData);
 		
