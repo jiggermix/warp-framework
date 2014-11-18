@@ -223,6 +223,8 @@ class Router
 
 	public static function Crud($base, $controller, $options=null)
 	{
+		Router::Any($base, "{$controller}Controller", $options);
+
 		Router::Group("{$base}/", function() use ($controller)
 		{
 			Router::Any("add", 				"{$controller}Controller@Create", $options);
@@ -230,14 +232,10 @@ class Router
 			Router::Any("edit/int:id", 		"{$controller}Controller@Update", $options);
 			Router::Any("delete/int:id",	"{$controller}Controller@Destroy", $options);
 		});
-
-		Router::Any("$base", "{$controller}Controller", $options);
 	}
 
 	public static function Fetch()
-	{
-		
-		
+	{			
 		if(!static::$patterns) static::$patterns = new PatternList();
 	
 		// If no default route is set, add the pre-built 404 response

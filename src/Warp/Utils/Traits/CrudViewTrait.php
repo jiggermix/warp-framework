@@ -8,6 +8,8 @@
 
 namespace Warp\Utils\Traits;
 
+use Warp\Foundation\ViewData;
+
 trait CrudViewTrait
 {
 	const CREATE_FILE = "add.php";
@@ -53,7 +55,7 @@ trait CrudViewTrait
 		if($this->crudFile) 
 			return static::GetViewFile($layout, $path, self::PAGE_FILE, $this->crudFile, $this->viewData);
 		
-		return parent::Render($url);
+		return parent::Render();
 	}
 }
 
