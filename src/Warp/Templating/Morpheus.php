@@ -44,14 +44,14 @@ class Morpheus
 
 	public function Layout($layout)
 	{
-		static::$layout = $layout;
+		$this->layout = $layout;
 
 		return $this;
 	}
 
 	public function Page($page)
 	{
-		static::$page = $page;
+		$this->page = $page;
 
 		return $this;
 	}
@@ -85,8 +85,8 @@ class Morpheus
 
 	public function Compile()
 	{
-		$layout = static::getLayout();
-		$page = static::getPage();
+		$layout = $this->getLayout();
+		$page = $this->getPage();
 		$fragment = $this->getFragment();
 		$data = $this->getData();		
 
