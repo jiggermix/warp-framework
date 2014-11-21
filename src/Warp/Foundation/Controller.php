@@ -20,7 +20,7 @@ class Controller
 	{
 		$modelName = static::$model;
 		if(!$modelName) $modelName = str_replace("Controller", "Model", get_called_class());
-		return new $modelName();
+		return new $modelName;
 	}
 	
 	public static function GetClass()
@@ -34,7 +34,7 @@ class Controller
 	{
 		$viewName = static::$view;
 		if(!$viewName) $viewName = str_replace("Controller", "View", get_called_class());
-		return new $viewName();
+		return new $viewName;
 	}
 	
 	public function IndexAction($parameters=null)

@@ -14,38 +14,79 @@ use Warp\UI\Layout;
 
 class View
 {	
-	const VIEW_FILE_DIRECTORY = "/application/design/";
-	const DEFAULT_FILE = "default.php";
-	protected static $layout;
-	protected static $path;
+	protected static $DEFAULT_FILE = "default.php";
+	protected static $layout = "default.php";
+	protected static $page;
+	protected $fragment;
+	protected $data;
 		
-	protected static function GetLayout()
+	protected static function getLayout()
 	{
 		return static::$layout;
 	}
 	
-	protected static function GetPath()
+	protected static function getPage()
 	{
-		return static::$path;
+		return static::$page;
+	}
+
+	protected static function getFragment()
+	{
+		return static::$fragment;
+	}
+
+	protected static function getData()
+	{
+		return static::$data;
+	}
+
+	public function Layout($layout)
+	{
+		static::$layout = $layout;
+
+		return $this;
+	}
+
+	public function Page($page)
+	{
+		static::$page = $page;
+
+		return $this;
+	}
+
+	public function Fragment($fragment)
+	{
+		$this->fragment = $fragment;
+
+		return $this;
+	}
+
+	public function Data($data)
+	{
+		$this->data = $data;
+
+		return $this;
 	}
 	
 	public function Render()
 	{
-		$layout = static::GetLayout();
-		$path = static::GetPath();
-		$view = static::GetDefaultViewFile($layout, $path);	
+		$layout = static::getLayout();
+		$path = static::getPage();
+		$fragment = $this->getFragment();
+		$data = $this->getData();
+		$view = static::getDefaultViewFile($layout, $page, $fragment, $data);
 		
 		return $view;
 	}
 	
-	protected static function GetViewFile($layout, $path, $page, $fragment=null, $data=null)
+	protected static function getViewFile($layout, $page, $file, $fragment=null, $data=null)
 	{			 	
 		$viewFragment = new Fragment();
-		$viewFragment->SetFile($path."/fragments/".$fragment)
+		$viewFragment->SetFile($page."/fragments/".$fragment)
 					 ->SetData($data);
 					 
 		$viewPage = new Page();
-		$viewPage->SetFile($path."/".$page)
+		$viewPage->SetFile($page."/".$file)
 				 ->SetData($data)
 				 ->SetFragment($viewFragment);
 		
@@ -58,9 +99,9 @@ class View
 		else $viewPage->Render();
 	}
 	
-	protected static function GetDefaultViewFile($layout, $path)
+	protected static function getDefaultViewFile($layout, $page, $fragment=null, $data=null)
 	{
-		return static::GetViewFile($layout, $path, self::DEFAULT_FILE);
+		return static::getViewFile($layout, $page, static::$DEFAULT_FILE, $fragment, $data);
 	}
 
 	public static function Make()
