@@ -127,7 +127,7 @@ class Application
 			$response = Router::Fetch();
 
 			if($response instanceof IElement) echo $response->Render();
-			else if(!is_string($response)) throw new \Exception("Invalid response");
+			else if(!is_string($response) && $response) throw new \Exception("Invalid response");
 			else echo $response;
 		}
 		catch (\Exception $ex)
