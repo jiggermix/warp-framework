@@ -20,7 +20,7 @@ class Morpheus implements ITemplateEngine
 	protected $fragment;
 	protected $data;
 
-	protected function __construct() {};
+	protected function __construct() {}
 
 	protected function getLayout()
 	{
