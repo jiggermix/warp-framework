@@ -10,7 +10,7 @@ namespace Warp\Templating;
 
 use Warp\Utils\FileHandle;
 
-class Morpheus implements ITemplateEngine
+class Morpheus
 {
 	const FILE_EXTENSION = ".morph.php";
 	const XML_HEADER = "<?xml version='1.0' encoding='UTF-8'?>";
