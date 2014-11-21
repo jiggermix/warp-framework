@@ -39,7 +39,7 @@ class Morpheus
 
 	protected function getData()
 	{
-		return $this->$data;
+		return $this->data;
 	}
 
 	public function Layout($layout)
