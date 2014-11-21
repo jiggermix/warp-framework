@@ -11,6 +11,7 @@ namespace Warp\Foundation;
 use Warp\UI\Fragment;
 use Warp\UI\Page;
 use Warp\UI\Layout;
+use Warp\Templating\Morpheus;
 
 class View
 {	
@@ -30,14 +31,14 @@ class View
 		return static::$page;
 	}
 
-	protected static function getFragment()
+	protected function getFragment()
 	{
-		return static::$fragment;
+		return $this->fragment;
 	}
 
-	protected static function getData()
+	protected function getData()
 	{
-		return static::$data;
+		return $this->data;
 	}
 
 	public function Layout($layout)
@@ -71,10 +72,19 @@ class View
 	public function Render()
 	{
 		$layout = static::getLayout();
-		$path = static::getPage();
+		$page = static::getPage();
 		$fragment = $this->getFragment();
 		$data = $this->getData();
-		$view = static::getDefaultViewFile($layout, $page, $fragment, $data);
+
+		if(Morpheus::Accepts($layout))
+			$view = Morpheus::Make()
+					->Layout($layout)
+					->Page($page)
+					->Fragment($fragment)
+					->Data($data)
+					->Compile();
+		else
+			$view = static::getDefaultViewFile($layout, $page, $fragment, $data);
 		
 		return $view;
 	}

@@ -12,18 +12,28 @@ class ViewData
 {
 	protected $details = array();
 	
-	/***
+	/**
 	 * Getter
 	 * @params string name
 	 * @return string value
 	 */
 	public function __get($name)
+	{	
+		return $this->Get($name);
+	}
+
+	/**
+	 * Public Getter
+	 * @params string name
+	 * @return string value
+	 */
+	public function Get($name)
 	{
 		if(!isset($this->details[$name])) return null;
-		return $this->details[$name];		
+		return $this->details[$name];	
 	}
 	
-	/***
+	/**
 	 * Setter
 	 * @params string name, string value
 	 */
