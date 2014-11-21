@@ -92,7 +92,7 @@ class Morpheus
 
 		$layoutFile = new FileHandle($layout);
 		$xmlText = self::XML_HEADER . $layoutFile->Contents();
-		$file->Close();
+		$layoutFile->Close();
 
 		return $xmlText;
 	}
