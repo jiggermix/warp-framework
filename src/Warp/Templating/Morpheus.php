@@ -91,7 +91,7 @@ class Morpheus
 		$data = $this->getData();		
 
 		$layoutFile = new FileHandle($layout);
-		$xmlText = self::XML_HEADER . $file->Contents();
+		$xmlText = self::XML_HEADER . $layoutFile->Contents();
 		$file->Close();
 
 		return $xmlText;
