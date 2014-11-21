@@ -8,7 +8,7 @@
 
 namespace Warp\Utils\Traits;
 
-trait CrudableController
+trait Crudified
 {
 	public function CreateAction($parameters)
 	{

@@ -10,7 +10,7 @@ namespace Warp\Utils\Traits\View;
 
 use Warp\Foundation\ViewData;
 
-trait CrudableView
+trait Crudable
 {
 	protected static $INDEX_FILE = "index.php";
 	protected static $CREATE_FILE = "add.php";

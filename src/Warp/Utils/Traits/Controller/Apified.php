@@ -11,7 +11,7 @@ namespace Warp\Utils\Traits;
 use Warp\Utils\Enumerations\FieldType;
 use Warp\Http\Input;
 
-trait APIControllerTrait
+trait Apified
 {
 	public static $HasAPI = true;
 
