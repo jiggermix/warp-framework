@@ -13,6 +13,7 @@ use Warp\Data\Database;
 use Warp\Session\Session;
 use Warp\Utils\Debugger;
 use Warp\Utils\Enumerations\DebugMode;
+use Warp\Utils\Interfaces\IElement;
  
 class Application
 {
@@ -124,7 +125,10 @@ class Application
 			Reference::Import("resource", "resources");
 
 			$response = Router::Fetch();
-			echo $response;
+
+			if($response instanceof IElement) echo $response->Render();
+			else if(!is_string($response)) throw new \Exception("Invalid response");
+			else echo $response;
 		}
 		catch (\Exception $ex)
 		{
