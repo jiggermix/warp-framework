@@ -12,8 +12,9 @@ use Warp\UI\Fragment;
 use Warp\UI\Page;
 use Warp\UI\Layout;
 use Warp\Templating\Morpheus;
+use Warp\Utils\Interfaces\IElement;
 
-class View
+class View implements IElement
 {	
 	protected static $DEFAULT_FILE = "default.php";
 	protected static $layout = "default.php";

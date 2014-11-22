@@ -10,7 +10,6 @@ namespace Warp\Utils\Interfaces;
 
 interface IElement
 {	
-	public function Initialize($id, $parameters);
 	public function Render();
 }
 
