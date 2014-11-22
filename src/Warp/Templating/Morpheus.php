@@ -9,16 +9,17 @@
 namespace Warp\Templating;
 
 use Warp\Utils\FileHandle;
+use Warp\Utils\Interfaces\IElement;
 
-class Morpheus
+class Morpheus implements IElement;
 {
 	const FILE_EXTENSION = ".morph.php";
 	const XML_HEADER = "<?xml version='1.0' encoding='UTF-8'?>";
-	protected $directory;
 	protected $layout;
 	protected $page;
 	protected $fragment;
 	protected $data;
+	protected $compiled;
 
 	protected function __construct() {}
 
@@ -94,7 +95,14 @@ class Morpheus
 		$xmlText = self::XML_HEADER . $layoutFile->Contents();
 		$layoutFile->Close();
 
-		return $xmlText;
+		$this->compiled = $xmlText;
+
+		return $this;
+	}
+
+	public function Render()
+	{
+		return $this->compiled;
 	}
 }
 
