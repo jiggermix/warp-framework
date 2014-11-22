@@ -8,6 +8,7 @@
 
 namespace Warp\Templating;
 
+use Warp\Core\Reference;
 use Warp\Utils\FileHandle;
 use Warp\Utils\Interfaces\IElement;
 
@@ -91,7 +92,7 @@ class Morpheus implements IElement
 		$fragment = $this->getFragment();
 		$data = $this->getData();		
 
-		$layoutFile = new FileHandle($layout);
+		$layoutFile = new FileHandle($layout, Reference::Path("layout"));
 		$xmlText = self::XML_HEADER . $layoutFile->Contents();
 		$layoutFile->Close();
 

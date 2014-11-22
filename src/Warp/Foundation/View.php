@@ -80,8 +80,8 @@ class View implements IElement
 		if(Morpheus::Accepts($layout))
 			$view = Morpheus::Make()
 					->Layout($layout)
-					->Page($page)
-					->Fragment($fragment)
+					->Page($page."/default".Morpheus::FILE_EXTENSION)
+					->Fragment($page."/fragments/".$fragment)
 					->Data($data)
 					->Compile();
 		else
