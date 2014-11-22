@@ -93,7 +93,7 @@ class Morpheus implements IElement
 		$data = $this->getData();		
 
 		$layoutFile = new FileHandle($layout, Reference::Path("layout"));
-		$xmlText = self::XML_HEADER . $layoutFile->Contents();
+		$xmlText = self::XML_HEADER . "\n" . $layoutFile->Contents();
 		$layoutFile->Close();
 
 		$this->compiled = $xmlText;
