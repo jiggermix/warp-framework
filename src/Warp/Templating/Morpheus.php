@@ -11,7 +11,7 @@ namespace Warp\Templating;
 use Warp\Utils\FileHandle;
 use Warp\Utils\Interfaces\IElement;
 
-class Morpheus implements IElement;
+class Morpheus implements IElement
 {
 	const FILE_EXTENSION = ".morph.php";
 	const XML_HEADER = "<?xml version='1.0' encoding='UTF-8'?>";
