@@ -29,7 +29,7 @@ class Router
 	public static function GetServer()
 	{
 		$port = $_SERVER['SERVER_PORT'];
-		return $_SERVER['SERVER_NAME'] . ($port? ":".$port : "");
+		return $_SERVER['SERVER_NAME'] . ($port && $port!="80"? ":".$port : "");
 	}
 	
 	public static function GetURL()
