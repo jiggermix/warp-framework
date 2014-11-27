@@ -14,7 +14,7 @@ use Warp\Security\Authentication;
 
 class Router
 {
-	protected static $path="";
+	protected static $path;
 	protected static $prefix;
 	protected static $patterns;
 	protected static $elementDelimiter = "/";
@@ -76,12 +76,13 @@ class Router
 		$regex = "@^{$baseURL}";
 
 		// Remove extra forward slash
-		if($route[0] == static::$elementDelimiter) array_shift($elements);
-
-		foreach($elements as $element)
+		if($elements[0] == static::$elementDelimiter) array_shift($elements);
+		
+		foreach($elements as $elementKey => $element)
 		{
 			// Add a delimiter to the regular expression
-			$regex .= static::$elementDelimiter;
+			if($elementKey > 0 || $elementKey == 0 && static::$path)
+				$regex .= static::$elementDelimiter;
 
 			// Examine type:name strings
 			$args = explode(":", $element);
@@ -148,6 +149,8 @@ class Router
 
 		// Match the end of the URL with Unicode awareness
 		$regex .= "$@u";
+		
+		echo $regex;
 
 		return $regex;
 	}
