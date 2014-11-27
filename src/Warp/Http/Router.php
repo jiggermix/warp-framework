@@ -38,7 +38,9 @@ class Router
 
 		if(strpos($_SERVER['REQUEST_URI'], "?") > 0)
 			$URL = strtok($URL, "?");
-
+			
+		if(!static::$path && $URL == "") $URL = "/";
+			
 		return $URL;
 	}
 	
