@@ -149,8 +149,6 @@ class Router
 
 		// Match the end of the URL with Unicode awareness
 		$regex .= "$@u";
-		
-		echo $regex;
 
 		return $regex;
 	}
