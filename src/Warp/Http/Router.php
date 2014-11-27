@@ -14,7 +14,7 @@ use Warp\Security\Authentication;
 
 class Router
 {
-	protected static $path;
+	protected static $path="";
 	protected static $prefix;
 	protected static $patterns;
 	protected static $elementDelimiter = "/";
