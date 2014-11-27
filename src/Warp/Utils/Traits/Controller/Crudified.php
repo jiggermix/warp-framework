@@ -6,7 +6,7 @@
  * @description Trait for Crud Controllers
  */
 
-namespace Warp\Utils\Traits;
+namespace Warp\Utils\Traits\Controller;
 
 trait Crudified
 {

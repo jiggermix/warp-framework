@@ -6,7 +6,7 @@
  * @description Trait for API Controllers
  */
 
-namespace Warp\Utils\Traits;
+namespace Warp\Utils\Traits\Controller;
 
 use Warp\Utils\Enumerations\FieldType;
 use Warp\Http\Input;
