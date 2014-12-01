@@ -47,6 +47,11 @@ class Model
 
 	protected function validate($errors=array()) 
 	{
+		foreach(static::$fields as $field => $options)
+		{
+			if($options["required"] && static::$values[$field] == null) $errors[] = $field . " is a required field"; 
+		}
+
 		return $errors;
 	}
 	
