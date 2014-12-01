@@ -112,12 +112,13 @@ class Model
 	 */
 	public function __set($name,$value)
 	{
-		if(!isset(static::$fields[$name])) return;
 		$this->Set($name, $value);
 	}
 	
 	public function Set($name,$value)
 	{
+		if(!isset(static::$fields[$name])) return;
+		
 		switch(static::$fields[$name]["type"])
 		{
 			case FieldType::Integer:
