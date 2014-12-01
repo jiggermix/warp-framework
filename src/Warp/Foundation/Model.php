@@ -49,7 +49,7 @@ class Model
 	{
 		foreach(static::$fields as $field => $options)
 		{
-			if($options["required"] && static::$values[$field] == null) $errors[] = $field . " is a required field"; 
+			if($options["required"] && $this->values[$field] == null) $errors[] = $field . " is a required field"; 
 		}
 
 		return $errors;
@@ -118,7 +118,7 @@ class Model
 	public function Set($name,$value)
 	{
 		if(!isset(static::$fields[$name])) return;
-		
+
 		switch(static::$fields[$name]["type"])
 		{
 			case FieldType::Integer:
