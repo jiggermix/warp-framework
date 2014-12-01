@@ -42,7 +42,12 @@ class Model
 	 */
 	protected static function build() 
 	{
-		throw new Exception("A build method was not defined for the model");
+		throw new \Exception("A build method was not defined for the model");
+	}
+
+	protected function validate($errors=array()) 
+	{
+		return $errors;
 	}
 	
 	protected static function addTimestamps()
@@ -234,43 +239,52 @@ class Model
 	
 	public function Save()
 	{
-		$command = new CommandQuery(static::GetSource(), static::GetKey());
+		$errors = $this->validate(); 
 		
-		if(static::GetKeyValue() == null)
+		if(count($errors) == 0)
 		{
-			$command->SetType(CommandType::Add);
-			$this->values[SystemField::CreatedAt] = date("Y-m-d H:i:s");
-			$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
+			$command = new CommandQuery(static::GetSource(), static::GetKey());
+			
+			if(static::GetKeyValue() == null)
+			{
+				$command->SetType(CommandType::Add);
+				$this->values[SystemField::CreatedAt] = date("Y-m-d H:i:s");
+				$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
+			}
+			else
+			{
+				$command->SetType(CommandType::Edit);
+				$command->WhereEqualTo(static::GetKey(), static::GetKeyValue());
+				$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
+			}
+			
+			foreach($this->dirty as $field => $value)
+			{
+				$details = static::$fields[$field];
+
+				switch($this->GetFieldType($field))
+				{
+					case FieldType::Pointer:
+						$command->BindParameter($field, $this->values[$field]->GetKeyValue(), $details["type"]);
+					break;
+
+					default:
+						$command->BindParameter($field, $this->values[$field], $details["type"]);
+					break;
+				}
+			}
+
+			$this->dirty = array();
+			
+			$commandReturn = $command->Execute();
+			
+			if(static::GetKeyValue() == null) $this->SetKeyValue($commandReturn->lastInsertID);
+			return $commandReturn->rowsAffected;
 		}
 		else
 		{
-			$command->SetType(CommandType::Edit);
-			$command->WhereEqualTo(static::GetKey(), static::GetKeyValue());
-			$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
+			return $errors;
 		}
-		
-		foreach($this->dirty as $field => $value)
-		{
-			$details = static::$fields[$field];
-
-			switch($this->GetFieldType($field))
-			{
-				case FieldType::Pointer:
-					$command->BindParameter($field, $this->values[$field]->GetKeyValue(), $details["type"]);
-				break;
-
-				default:
-					$command->BindParameter($field, $this->values[$field], $details["type"]);
-				break;
-			}
-		}
-
-		$this->dirty = array();
-		
-		$commandReturn = $command->Execute();
-		
-		if(static::GetKeyValue() == null) $this->SetKeyValue($commandReturn->lastInsertID);
-		return $commandReturn->rowsAffected;
 	}
 	
 	public function Delete()
