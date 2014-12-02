@@ -213,7 +213,7 @@ class Model
 				{
 					if(!$pointerDetails["hidden"] && $pointerField)
 						$query->IncludeField(
-							$pointerModel->GetSource()."_".$pointerField, 
+							'"'.$pointerModel->GetSource().".".$pointerField.'"', 
 							$pointerModel->GetSource().".".$pointerField
 						);
 				}
