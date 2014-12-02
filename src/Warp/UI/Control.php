@@ -125,7 +125,10 @@ class Control implements IElement
 		$properties = " ".implode(" ", $listProperties);
 		
 		$listChildren = array();
-		foreach($this->children as $child) $listChildren[] = $child->Render();
+		foreach($this->children as $child) 
+			if($child)
+				$listChildren[] = $child->Render();
+
 		$children = implode(PHP_EOL, $listChildren);
 		
 		$enclosingTag = ($this->isParent) ? "</{$this->type}>" : "";
