@@ -2,7 +2,7 @@
 
 namespace Warp\Foundation;
 
-class Partial implements IElement
+class Partial
 {	
 	public static function Import($file)
 	{
