@@ -197,6 +197,8 @@ class Model
 	public static function GetQuery()
 	{		
 		$query =  new Query(static::GetSource());
+
+		if(count(static::$fields) == 0) static::build();
 		
 		foreach(static::$fields as $field => $details)
 		{
