@@ -8,7 +8,7 @@ class Partial
 {	
 	public static function Import($file)
 	{
-		include Resource::Path("partial").$file;
+		include Resource::Path("partial") . $file;
 	}
 }
 
