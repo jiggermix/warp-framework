@@ -74,7 +74,7 @@ trait Crudable
 			$this->Data($viewData);
 		}
 
-		return static::GetViewFile($layout, $path, static::$PAGE_FILE, $this->getFragment(), $this->getData());
+		return parent::Render();
 	}
 }
 
