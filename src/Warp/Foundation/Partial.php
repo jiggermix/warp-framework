@@ -2,13 +2,13 @@
 
 namespace Warp\Foundation;
 
-use Warp\Core\Resource;
+use Warp\Core\Reference;
 
 class Partial
 {	
 	public static function Import($file)
 	{
-		include Resource::Path("partial") . $file;
+		include Reference::Path("partial") . $file;
 	}
 }
 
