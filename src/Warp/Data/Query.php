@@ -178,6 +178,8 @@ class Query
 			"connector" => $connector,
 			"type" => static::$JOIN_TYPE[$type]
 		);
+
+		return $this;
 	}
 	
 	public function OrderBy($field)
@@ -186,6 +188,8 @@ class Query
 			"field" => $field,
 			"type" => static::$ORDER_BY_TYPE["ASCENDING"]
 		);
+
+		return $this;
 	}
 	
 	public function OrderByDescending($field)
@@ -194,11 +198,15 @@ class Query
 			"field" => $field,
 			"type" => static::$ORDER_BY_TYPE["DESCENDING"]
 		);
+
+		return $this;
 	}
 	
 	public function UniteWith($query)
 	{
 		$this->unions[] = $query;
+
+		return $this;
 	}
 	
 	protected function getWhereObject()
