@@ -208,6 +208,20 @@ class Query
 
 		return $this;
 	}
+
+	public function Limit($limit)
+	{
+		$this->limit = $limit;
+
+		return $this;
+	}
+
+	public function Skip($skip)
+	{
+		$this->skip = $skip;
+
+		return $this;
+	}
 	
 	protected function getWhereObject()
 	{
