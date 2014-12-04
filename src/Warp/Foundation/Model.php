@@ -232,6 +232,13 @@ class Model
 		
 		return $query;
 	}
+
+	public function Fill($input)
+	{
+		foreach($input as $field => $value)
+			if(isset(static::$fields[$field]))
+				$this->Set($field, $value);
+	}
 	
 	public function Fetch()
 	{
