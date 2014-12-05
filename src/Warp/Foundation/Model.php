@@ -236,7 +236,7 @@ class Model
 	public function Fill($input)
 	{
 		foreach($input as $field => $value)
-			if(isset(static::$fields[$field]))
+			if(isset(static::$fields[$field]) && !$this->GetFieldGuarded($field))
 				$this->Set($field, $value);
 	}
 	
