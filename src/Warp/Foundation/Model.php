@@ -380,31 +380,31 @@ class Model
 	public static function HasMany($model, $key=null)
 	{
 		if(!$key) $key = $model."ID";
-		$fieldObject = static::Has($field)
-			->Relation($model, $key);
+		$fieldObject = static::Has($model)
+						->Relation($model, $key);
 		return $fieldObject;
 	}
 	
 	public static function BelongsTo($model, $key=null)
 	{
 		if(!$key) $key = $model."ID";
-		$fieldObject = static::Has($field)
-			->Pointer($model, $key);
+		$fieldObject = static::Has($model)
+						->Pointer($model, $key);
 		return $fieldObject;
 	}
 
 	public static function BelongsToMany($model, $join=null)
 	{
-		$fieldObject = static::Has($field)
-			->MultiPointer($model, $join);
+		$fieldObject = static::Has($model)
+						->MultiPointer($model, $join);
 		return $fieldObject;
 	}
 	
 	public static function Translates($model, $key=null)
 	{
 		if(!$key) $key = $model;
-		$fieldObject = static::Has($field)
-			->Translate($model, $key);
+		$fieldObject = static::Has($model)
+						->Translate($model, $key);
 		return $fieldObject;
 	}
 	
