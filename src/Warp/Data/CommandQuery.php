@@ -124,7 +124,26 @@ use PDO;
 	{
 		$queryObject = $this->GetQueryObject();
 		return Database::Execute($queryObject->QueryString, $queryObject->Parameters, true);
- 	}	
+ 	}
+
+ 	public static function ExecuteAll($commands)
+ 	{
+ 		$queries = array();
+
+ 		foreach($commands as $command)
+ 		{
+ 			$queryObject = $command->GetQueryObject();
+ 			$statement = $queryObject->QueryString;
+ 			$parameters = $queryObject->Parameters;
+
+ 			$queries[] = array(
+ 				"statement" => $statement,
+ 				"parameters" => $parameters
+ 			);
+ 		}
+
+ 		return Database::ExecuteAll($queries);
+ 	}
 }
 
  

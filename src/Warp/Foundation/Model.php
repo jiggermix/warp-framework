@@ -251,6 +251,53 @@ class Model
 		
 		return $result;
 	}
+
+	public static function SaveAll()
+	{
+		$models = func_get_args();
+		$commands = array();
+
+		foreach($models as $model) $commands = $model->SaveCommand();
+
+		CommandQuery::ExecuteAll($commands);
+	}
+
+	public function SaveCommand()
+	{
+		$command = new CommandQuery(static::GetSource(), static::GetKey());
+		$now = date("Y-m-d H:i:s");
+		
+		if(static::GetKeyValue() == null)
+		{
+			$command->SetType(CommandType::Add);
+			$this->Set(SystemField::CreatedAt, $now);
+			$this->Set(SystemField::UpdatedAt, $now);
+		}
+		else
+		{
+			$command->SetType(CommandType::Edit);
+			$command->WhereEqualTo(static::GetKey(), static::GetKeyValue());
+			$this->Set(SystemField::UpdatedAt, $now);
+		}
+		
+		foreach($this->dirty as $field => $value)
+		{
+			$details = static::$fields[$field];
+
+			switch($this->GetFieldType($field))
+			{
+				case FieldType::Pointer:
+					$command->BindParameter($field, $this->values[$field]->GetKeyValue(), $details["type"]);
+				break;
+
+				default:
+					$command->BindParameter($field, $this->values[$field], $details["type"]);
+				break;
+			}
+		}
+
+		return $command;
+	}
 	
 	public function Save()
 	{
@@ -258,41 +305,10 @@ class Model
 		
 		if(count($errors) == 0)
 		{
-			$command = new CommandQuery(static::GetSource(), static::GetKey());
-			$now = date("Y-m-d H:i:s");
-			
-			if(static::GetKeyValue() == null)
-			{
-				$command->SetType(CommandType::Add);
-				$this->Set(SystemField::CreatedAt, $now);
-				$this->Set(SystemField::UpdatedAt, $now);
-			}
-			else
-			{
-				$command->SetType(CommandType::Edit);
-				$command->WhereEqualTo(static::GetKey(), static::GetKeyValue());
-				$this->Set(SystemField::UpdatedAt, $now);
-			}
-			
-			foreach($this->dirty as $field => $value)
-			{
-				$details = static::$fields[$field];
-
-				switch($this->GetFieldType($field))
-				{
-					case FieldType::Pointer:
-						$command->BindParameter($field, $this->values[$field]->GetKeyValue(), $details["type"]);
-					break;
-
-					default:
-						$command->BindParameter($field, $this->values[$field], $details["type"]);
-					break;
-				}
-			}
+			$command = $this->SaveCommand();
+			$commandReturn = $command->Execute();
 
 			$this->dirty = array();
-			
-			$commandReturn = $command->Execute();
 			
 			if(static::GetKeyValue() == null) $this->SetKeyValue($commandReturn->lastInsertID);
 			return $commandReturn->rowsAffected;
