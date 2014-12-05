@@ -289,6 +289,12 @@ class Model
 				}
 			}
 
+			if(static::$timestamps)
+			{
+				$command->BindParameter(SystemField::CreatedAt, $this->values[SystemField::CreatedAt]);
+				$command->BindParameter(SystemField::UpdatedAt, $this->values[SystemField::UpdatedAt]);
+			}
+
 			$this->dirty = array();
 			
 			$commandReturn = $command->Execute();
