@@ -326,18 +326,38 @@ class Model
 		
 		if(count($errors) == 0)
 		{
+			// Execute before save
+			$this->beforeSave($this);
+
+			// Prepare command
 			$command = $this->SaveCommand();
 			$commandReturn = $command->Execute();
-
+			
+			// Reset dirty fields
 			$this->dirty = array();
 			
+			// Set key value
 			if(static::GetKeyValue() == null) $this->SetKeyValue($commandReturn->lastInsertID);
+
+			// Execute after save
+			$this->afterSave($this);
+
 			return $commandReturn->rowsAffected;
 		}
 		else
 		{
 			return $errors;
 		}
+	}
+
+	protected function beforeSave($model)
+	{
+		return;
+	}
+
+	protected function afterSave($model)
+	{
+		return;
 	}
 	
 	public function Delete()
