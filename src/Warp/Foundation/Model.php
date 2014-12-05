@@ -254,7 +254,8 @@ class Model
 
 	public static function SaveAll()
 	{
-		$models = func_get_args();
+		$arguments = func_get_args();
+		$models = is_array($arguments[0])? $arguments[0] : $arguments;
 		$commands = array();
 
 		foreach($models as $model) $commands[] = $model->SaveCommand();
@@ -262,9 +263,8 @@ class Model
 		CommandQuery::ExecuteAll($commands);
 	}
 
-	public static function SaveEach()
+	public static function SaveEach($modelItem)
 	{
-		$modelItems = func_get_args();
 		$commands = array();
 
 		foreach($modelItems as $modelItem)
