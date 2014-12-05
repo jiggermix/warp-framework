@@ -239,6 +239,59 @@ class Database
 		$db->commit();
 		return $rowsAffected;
 	}
+
+	/*** 
+	 * Execute sequential queries
+	 * @output String Rows affected
+	 */
+	public static function ExecuteEach()
+	{
+		$arguments = func_get_args();
+		$executeQueryBuilders = is_array($arguments[0])? $arguments[0] : $arguments;
+
+		$db = self::connect();
+		$db->beginTransaction();
+		
+		try
+		{
+			$results = null;
+
+			foreach($executeQueryBuilders as $executeQueryBuilder)
+			{
+				$rowsAffected = 0;
+				
+				$executeQuery = $executeQueryBuilder($results);
+				$query = $db->prepare($executeQuery["statement"]);
+			
+				foreach($executeQuery["parameters"] as $key => $parameter)
+				{
+					if(!isset($parameter["type"]))
+						$parameter["type"] = PDO::PARAM_STR;
+						
+					$query->bindParam($key,$parameter["value"],$parameter["type"]);
+				}
+					
+				$query->execute();
+				$rowsAffected += $query->rowCount();
+				$lastID = $db->lastInsertId();
+
+				$results = (object) array(
+					DatabaseReturn::RowsAffected => $rowsAffected,
+					DatabaseReturn::LastInsertID => $lastID
+				);
+			}
+		}
+		catch (PDOException $e)
+		{
+			$db->rollBack();
+			$exception = "Sorry, there was a problem with query execution. ({$e->getMessage()})";
+		}
+
+		if($exception) throw new \Exception($exception);
+		
+		$db->commit();
+		return $results;
+	}
 }
 
 ?>
