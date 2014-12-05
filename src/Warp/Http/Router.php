@@ -159,7 +159,7 @@ class Router
 	public static function Add($route, $action, $options=null)
 	{
 		if(!static::$patterns) static::$patterns = new PatternList();
-		if(!$options) = static::$options;
+		if(!$options) $options = static::$options;
 		
 		// Retrieve the pattern
 		$pattern = static::parseRoute($route);
