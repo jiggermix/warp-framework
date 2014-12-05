@@ -257,7 +257,7 @@ class Model
 		$models = func_get_args();
 		$commands = array();
 
-		foreach($models as $model) $commands = $model->SaveCommand();
+		foreach($models as $model) $commands[] = $model->SaveCommand();
 
 		CommandQuery::ExecuteAll($commands);
 	}
