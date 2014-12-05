@@ -257,9 +257,7 @@ class Database
 			$results = null;
 
 			foreach($executeQueryBuilders as $executeQueryBuilder)
-			{
-				$rowsAffected = 0;
-				
+			{				
 				$executeQuery = $executeQueryBuilder($results);
 				$query = $db->prepare($executeQuery["statement"]);
 			
@@ -272,7 +270,7 @@ class Database
 				}
 					
 				$query->execute();
-				$rowsAffected += $query->rowCount();
+				$rowsAffected = $query->rowCount();
 				$lastID = $db->lastInsertId();
 
 				$results = (object) array(

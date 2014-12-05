@@ -262,6 +262,27 @@ class Model
 		CommandQuery::ExecuteAll($commands);
 	}
 
+	public static function SaveEach()
+	{
+		$modelItems = func_get_args();
+		$commands = array();
+
+		foreach($modelItems as $modelItem)
+		{
+			$model = $modelItem["model"];
+			$to = $modelItem["to"];
+			
+			$commands[] = function($result) use ($model, $to)
+			{
+				if($to) $model->Set($to, $result->lastInsertID);
+
+				result $model->SaveCommand();
+			};
+		}
+
+		CommandQuery::ExecuteEach($commands);
+	}
+
 	public function SaveCommand()
 	{
 		$command = new CommandQuery(static::GetSource(), static::GetKey());

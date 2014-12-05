@@ -140,19 +140,25 @@ use PDO;
  	{
  		$queries = array();
 
- 		foreach($commands as $command)
- 		{
- 			$queryObject = $command->GetQueryObject();
- 			$statement = $queryObject->QueryString;
- 			$parameters = $queryObject->Parameters;
-
- 			$queries[] = array(
- 				"statement" => $statement,
- 				"parameters" => $parameters
- 			);
- 		}
+ 		foreach($commands as $command) $queries[] = $command->ToArray();
 
  		return Database::ExecuteAll($queries);
+ 	}
+
+ 	public static function ExecuteEach($commands)
+ 	{
+ 		$queries = array();
+
+ 		foreach($commands as $command)
+ 		{
+ 			$queries[] = function($result)
+ 			{
+ 				$commandItem = $command($result);
+ 				return $commandItem->ToArray();
+ 			};
+ 		}
+
+ 		return Database::ExecuteEach($queries);
  	}
 }
 
