@@ -120,11 +120,11 @@ use PDO;
 		return $queryObject;
 	}
 
-	public function Build()
+	public function ToArray()
 	{
 		$queryObject = $this->GetQueryObject();
 
-		return (object) array(
+		return array(
 			"statement" => $queryObject->QueryString,
 			"parameters" => $queryObject->Parameters
 		);
