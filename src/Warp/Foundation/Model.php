@@ -259,18 +259,19 @@ class Model
 		if(count($errors) == 0)
 		{
 			$command = new CommandQuery(static::GetSource(), static::GetKey());
+			$now = date("Y-m-d H:i:s");
 			
 			if(static::GetKeyValue() == null)
 			{
 				$command->SetType(CommandType::Add);
-				$this->values[SystemField::CreatedAt] = date("Y-m-d H:i:s");
-				$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
+				$this->Set(SystemField::CreatedAt, $now);
+				$this->Set(SystemField::UpdatedAt, $now);
 			}
 			else
 			{
 				$command->SetType(CommandType::Edit);
 				$command->WhereEqualTo(static::GetKey(), static::GetKeyValue());
-				$this->values[SystemField::UpdatedAt] = date("Y-m-d H:i:s");
+				$this->Set(SystemField::UpdatedAt, $now);
 			}
 			
 			foreach($this->dirty as $field => $value)
@@ -287,12 +288,6 @@ class Model
 						$command->BindParameter($field, $this->values[$field], $details["type"]);
 					break;
 				}
-			}
-
-			if(static::$timestamps)
-			{
-				$command->BindParameter(SystemField::CreatedAt, $this->values[SystemField::CreatedAt]);
-				$command->BindParameter(SystemField::UpdatedAt, $this->values[SystemField::UpdatedAt]);
 			}
 
 			$this->dirty = array();

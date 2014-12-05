@@ -12,6 +12,7 @@ use Warp\Data\Database;
 use Warp\Data\Query;
 use Warp\Data\QueryObject;
 use Warp\Utils\Enumerations\CommandType;
+use PDO;
  
  class CommandQuery extends Query
  {
