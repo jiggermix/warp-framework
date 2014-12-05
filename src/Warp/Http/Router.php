@@ -16,6 +16,7 @@ class Router
 {
 	protected static $path;
 	protected static $prefix;
+	protected static $options;
 	protected static $patterns;
 	protected static $elementDelimiter = "/";
 	protected static $home;
@@ -158,6 +159,7 @@ class Router
 	public static function Add($route, $action, $options=null)
 	{
 		if(!static::$patterns) static::$patterns = new PatternList();
+		if(!$options) = static::$options;
 		
 		// Retrieve the pattern
 		$pattern = static::parseRoute($route);
@@ -187,13 +189,13 @@ class Router
 		static::Add($route, $action, $options);
 	}
 
-	public static function Get($route, $action, $options=array())
+	public static function Get($route, $action, $options=null)
 	{
 		$options["type"] = "GET";
 		static::Add($route, $action, $options);
 	}
 
-	public static function Post($route, $action, $options=array())
+	public static function Post($route, $action, $options=null)
 	{
 		$options["type"] = "POST";
 		static::Add($route, $action, $options);
@@ -219,11 +221,13 @@ class Router
 		static::Add("/", $class);
 	}
 
-	public static function Group($route, $subroutes)
+	public static function Group($route, $subroutes, $options=null)
 	{
 		static::$prefix = $route;
+		static::$options = $options;
 		$subroutes();
 		static::$prefix = null;
+		static::$options = null;
 	}
 
 	public static function Crud($base, $controller, $options=array())
