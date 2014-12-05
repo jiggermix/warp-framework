@@ -319,6 +319,16 @@ class Model
 
 		return $command;
 	}
+
+	public function Touch()
+	{
+		if(static::GetKeyValue())
+		{
+			$this->Set(SystemField::UpdatedAt, date("Y-m-d H:i:s"));
+			$this->Save();
+		}
+		else return;
+	}
 	
 	public function Save()
 	{
