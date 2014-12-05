@@ -352,7 +352,7 @@ class Model
 	{
 		// SoftDelete only works on tables with "deletedAt" column.
 		$command = new CommandQuery(static::GetSource(), static::GetKey());
-		$command->WhereEqualTo(static::GetKey() ,static::GetKeyValue());
+		$command->WhereEqualTo(static::GetKey(), $this->GetKeyValue());
 		$command->SetType(CommandType::Edit);
 		$command->BindParameter(SystemField::DeletedAt, date("Y-m-d H:i:s"), null);
 		$command->BindParameter(SystemField::UpdatedAt, date("Y-m-d H:i:s"), null);
@@ -363,7 +363,7 @@ class Model
 	{
 		// Restore only works on tables with "deletedAt" column.
 		$command = new CommandQuery(static::GetSource(), static::GetKey());
-		$command->WhereEqualTo(static::GetKey() ,static::GetKeyValue());
+		$command->WhereEqualTo(static::GetKey(), $this->GetKeyValue());
 		$command->SetType(CommandType::Edit);
 		$command->BindParameter(SystemField::DeletedAt, null, null);
 		$command->BindParameter(SystemField::UpdatedAt, date("Y-m-d H:i:s"), null);
