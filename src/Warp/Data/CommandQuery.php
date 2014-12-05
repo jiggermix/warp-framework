@@ -119,6 +119,16 @@ use PDO;
 		
 		return $queryObject;
 	}
+
+	public function Build()
+	{
+		$queryObject = $this->GetQueryObject();
+
+		return (object) array(
+			"statement" => $queryObject->QueryString,
+			"parameters" => $queryObject->Parameters
+		);
+	}
 	
 	public function Execute()
 	{
