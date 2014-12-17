@@ -16,7 +16,7 @@ class URL
 
 	public static function To($url)
 	{
-		return "//".Router::GetServer()."/".Router::GetPath().$url;
+		return "http://".Router::GetServer()."/".Router::GetPath().$url;
 	}
 }
 
