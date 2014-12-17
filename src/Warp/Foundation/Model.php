@@ -213,7 +213,7 @@ class Model
 				
 				foreach($pointerModel->GetFields() as $pointerField => $pointerDetails)
 				{
-					if(!$pointerDetails["hidden"] && $pointerField)
+					if(!$pointerDetails["hidden"] && !$pointerDetails["pointer"] && $pointerField)
 						$query->IncludeField(
 							'"'.$pointerModel->GetSource().".".$pointerField.'"', 
 							$pointerModel->GetSource().".".$pointerField
