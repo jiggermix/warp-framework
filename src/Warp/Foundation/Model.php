@@ -276,7 +276,7 @@ class Model
 			{
 				if($to) $model->Set($to, $result->lastInsertID);
 
-				result $model->SaveCommand();
+				return $model->SaveCommand();
 			};
 		}
 
