@@ -14,43 +14,7 @@ class API
 {
 	public static function Request($parameters, $type = "JSON")
 	{
-		$response = Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
-		$controllerName = "\\" . $parameters["class"] . "Controller";
-		
-		if(!$controllerName::$HasAPI) return $response;
-		
-		switch($type)
-		{
-			case APIRequest::REST:
-				if (class_exists($controllerName)) 
-				{
-					// Retrieve Array
-					$controller = new $controllerName();    
-					$actionName = $parameters["action"] . "Action";
-					
-					if(method_exists($controller, $actionName))
-					{
-						$results =  $controller->$actionName($parameters["parameters"]);
-										
-						if($results)
-							$response = Response::Make(APIStatus::Success, APIMessage::Success, json_decode($results))->ToJSON();
-						else
-							$response = Response::Make(APIStatus::Blank, APIMessage::Blank, array())->ToJSON();	
-					}
-					else $response = Response::Make(APIStatus::Invalid, APIMessage::Invalid, array())->ToJSON();
-				} 
-				else
-				{    
-					$response = Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
-				}
-			break;
-			
-			case APIRequest::SOAP:
-				// TO-DO: Reimplement SOAP
-			break;
-		}
-		
-		return $response;
+		return Response::Make(100, "Sample", 0);
 	}
 }
 
