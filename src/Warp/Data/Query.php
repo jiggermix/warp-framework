@@ -19,7 +19,7 @@ class Query
 	protected $where = array();
 	protected $orderBy = array();
 	protected $skip = 0;
-	protected $limit = 100;
+	protected $limit = 500;
 	protected $from;
 	protected static $JOIN_TYPE = array(
 		"JOIN" => "JOIN",

@@ -53,7 +53,8 @@ class Database
 				case DatabaseVendor::MYSQL:
 				$db = new PDO("mysql:host={$configuration->GetServer()};dbname=".$configuration->GetDatabase(),
 						$configuration->GetUsername(),
-						$configuration->GetPassword());
+						$configuration->GetPassword(),
+						array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')); // Added by MJP for Special Characters (ex. Bạn vẫn đang trong chế độ ngoại tuyến. Chúng tôi k)
 				break;
 				
 				case DatabaseVendor::SQLServer:
