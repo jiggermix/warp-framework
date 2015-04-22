@@ -117,7 +117,7 @@ class FoundationFactory
 
 			@mkdir($pageDirectory.$page);
 
-			$pageFile = new FileHandle($pageFilename, $pageDirectory);
+			$pageFile = new FileHandle($pageFilename, $pageDirectory.$page);
 			$pageFile->Write("<!-- Create your page here -->");
 			$pageFile->Close();
 		}
