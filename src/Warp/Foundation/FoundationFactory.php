@@ -62,7 +62,7 @@ class FoundationFactory
 			"source" => $source, 
 			"id" => $id
 		);
-		$fileContents = $this->replaceTemplateVars($vars, $templateContents);
+		$fileContents = static::replaceTemplateVars($vars, $templateContents);
 
 		$file = new FileHandle($filename, $directory);
 		$file->Write($fileContents);
@@ -81,7 +81,7 @@ class FoundationFactory
 		$vars = array(
 			"class" => $class
 		);
-		$fileContents = $this->replaceTemplateVars($vars, $templateContents);
+		$fileContents = static::replaceTemplateVars($vars, $templateContents);
 
 		$file = new FileHandle($filename, $directory);
 		$file->Write($fileContents);
@@ -102,7 +102,7 @@ class FoundationFactory
 			"layout" => $layout,
 			"page" => $page
 		);
-		$fileContents = $this->replaceTemplateVars($vars, $templateContents);
+		$fileContents = static::replaceTemplateVars($vars, $templateContents);
 
 		$file = new FileHandle($filename, $directory);
 		$file->Write($fileContents);
