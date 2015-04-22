@@ -20,37 +20,37 @@ class Console
 
 	public function __construct() 
 	{
-		static::Register("foundation:make", function($parameters)
+		$this->Register("foundation:make", function($parameters)
 		{
 			return FoundationFactory::Generate($parameters);
 		});
 
-		static::Register("migrate:install", function($parameters)
+		$this->Register("migrate:install", function($parameters)
 		{
 			return Migration::Install();
 		});
 
-		static::Register("migrate:make", function($parameters)
+		$this->Register("migrate:make", function($parameters)
 		{
 			return Migration::Make($parameters);
 		});
 
-		static::Register("migrate:commit", function()
+		$this->Register("migrate:commit", function()
 		{
 			return Migration::Commit();
 		});
 
-		static::Register("migrate:revert", function()
+		$this->Register("migrate:revert", function()
 		{
 			return Migration::Revert();
 		});
 
-		static::Register("migrate:reset", function()
+		$this->Register("migrate:reset", function()
 		{
 			return Migration::Reset();
 		});
 
-		static::Register("deploy", function($parameters)
+		$this->Register("deploy", function($parameters)
 		{
 			// TO-DO Deployment
 		});
@@ -79,13 +79,13 @@ class Console
 	// Generic function caller
 	public function Run($functionName, $parameters)
 	{
-		$response = static::$functions[$functionName]($parameters);
+		$response = $this->functions[$functionName]($parameters);
 		return $response;
 	}
 
 	// Function registry
 	public function Register($functionName, $function)
 	{
-		static::$functions[$functionName] = $function;
+		$this->functions[$functionName] = $function;
 	}
 }
