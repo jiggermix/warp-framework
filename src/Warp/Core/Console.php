@@ -79,7 +79,8 @@ class Console
 	// Generic function caller
 	public function Run($functionName, $parameters)
 	{
-		$response = $this->functions[$functionName]($parameters);
+		$functionName = $this->functions[$functionName];
+		$response = $functionName($parameters);
 		return $response;
 	}
 
