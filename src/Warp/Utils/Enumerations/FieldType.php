@@ -11,6 +11,7 @@ namespace Warp\Utils\Enumerations;
 class FieldType
 {
 	const String = "string";
+	const Text = "text";
 	const Float = "float";
 	const Decimal = "decimal";
 	const Integer = "integer";

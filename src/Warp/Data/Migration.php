@@ -38,6 +38,7 @@ class Migration
 				if(!class_exists($name)) throw new \Exception("The specified migration class does not exist: {$name}");
 
 				$migration = new $name;
+				if(!($migration instanceof IMigration)) throw new \Exception("The specified migration class does not implement IMigration: {$name}");
 				$migration->Up();
 
 				$itemModel = new MigrationModel($itemMigration["id"]);
@@ -195,8 +196,8 @@ class Migration
 
 class MigrationStatus
 {
-	const Pending = "PENDING";
-	const Committed = "COMMITTED";
+	const Pending = "pending";
+	const Committed = "comitted";
 }
 
 class MigrationModel extends Model

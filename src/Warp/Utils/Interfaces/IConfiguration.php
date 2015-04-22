@@ -12,5 +12,3 @@ interface IConfiguration
 {	
 	public function Apply();
 }
-
-?>

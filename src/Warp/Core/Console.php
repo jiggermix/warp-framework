@@ -55,6 +55,11 @@ class Console
 			return Migration::Reset();
 		});
 
+		$this->Register("job:start", function($parameters)
+		{
+			return Job::Install();
+		});
+
 		$this->Register("deploy", function($parameters)
 		{
 			// TO-DO Deployment

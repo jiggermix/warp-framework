@@ -12,7 +12,7 @@ use Warp\Core\Application;
 use Warp\Data\Database;
 use Warp\Data\DatabaseConfiguration;
 
-class Configuration
+class Configuration implements IConfiguration
 {
 	public function SetPath($path)
 	{
@@ -37,6 +37,11 @@ class Configuration
 	public function SetDatabase($database)
 	{
 		Application::GetInstance()->SetDatabase($database);
+	}
+
+	public function Apply()
+	{
+		throw new \Exception("An apply method was not implemented for the configuration");
 	}
 }
 

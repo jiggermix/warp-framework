@@ -206,6 +206,14 @@ class Field
 		return $this;
 	}
 
+	public function Text()
+	{
+		$this->Type(FieldType::Text);
+		$this->Input(InputType::Text);
+
+		return $this;
+	}
+
 	public function Email($size)
 	{
 		$this->Input(InputType::Email);
