@@ -113,7 +113,7 @@ class Migration
 			if(!class_exists($name)) throw new \Exception("The specified migration class does not exist: {$name}");
 
 			$itemModel = new MigrationModel($itemMigration["id"]);
-			$itemModel->Restore();
+			$itemModel->Revert();
 
 			$migration = new $name;
 			$migration->Down();
@@ -144,7 +144,7 @@ class Migration
 				if(!class_exists($name)) throw new \Exception("The specified migration class does not exist : {$name}");
 
 				$itemModel = new MigrationModel($itemMigration["id"]);
-				$itemModel->Restore();
+				$itemModel->Revert();
 
 				$migration = new $name;
 				$migration->Down();
