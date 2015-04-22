@@ -229,7 +229,6 @@ class MigrationModel extends Model
 	{
 		$this->status = MigrationStatus::Committed;
 		$this->Save();
-		$this->SoftDelete();
 	}
 
 	public function Revert()
