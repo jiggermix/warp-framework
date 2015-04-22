@@ -165,7 +165,7 @@ class Migration
 			Schema::Table("_migration")
 				->ID()
 				->String("name")
-				->String("type")
+				->String("status")
 				->Timestamps()
 				->Create();
 			
