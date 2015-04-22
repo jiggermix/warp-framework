@@ -25,6 +25,11 @@ class Console
 			FoundationFactory::Generate($parameters);
 		});
 
+		static::Register("migrate:install", function($parameters)
+		{
+			Migration::Install();
+		});
+
 		static::Register("migrate:make", function($parameters)
 		{
 			Migration::Make($parameters);
