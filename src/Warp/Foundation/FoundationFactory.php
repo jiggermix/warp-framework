@@ -39,7 +39,7 @@ class FoundationFactory
 		$layout = $vars["layout"]? $vars["layout"] : "default.php";
 		$page = $vars["page"];
 
-		return str_replace("{{page}}", $page
+		return str_replace("{{page}}", $page,
 					str_replace("{{layout}}", $layout, 
 						str_replace("{{id}}",  $id, 
 							str_replace("{{source}}", $source, 
