@@ -22,38 +22,58 @@ class Console
 	{
 		static::Register("foundation:make", function($parameters)
 		{
-			FoundationFactory::Generate($parameters);
+			return FoundationFactory::Generate($parameters);
 		});
 
 		static::Register("migrate:install", function($parameters)
 		{
-			Migration::Install();
+			return Migration::Install();
 		});
 
 		static::Register("migrate:make", function($parameters)
 		{
-			Migration::Make($parameters);
+			return Migration::Make($parameters);
 		});
 
 		static::Register("migrate:commit", function()
 		{
-			Migration::Commit();
+			return Migration::Commit();
 		});
 
 		static::Register("migrate:revert", function()
 		{
-			Migration::Revert();
+			return Migration::Revert();
 		});
 
 		static::Register("migrate:reset", function()
 		{
-			Migration::Reset();
+			return Migration::Reset();
 		});
 
 		static::Register("deploy", function($parameters)
 		{
-
+			// TO-DO Deployment
 		});
+	}
+
+	// Start the Console
+	public static function Start()
+	{
+		// Get the console variables
+		$function = $argv[0];
+		$rows = explode(",", $argv[1]);
+		$vars = array();
+		foreach($rows as $row)
+		{
+			$parts = explode("=", $row);
+			$vars[$parts[0]] = $parts[1];
+		}
+
+		// Prepare the console
+		$console = new Console;
+
+		// Run the console
+		return $console->Run($function, $vars);
 	}
 
 	// Generic function caller
