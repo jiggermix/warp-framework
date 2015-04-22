@@ -33,6 +33,11 @@ class Console
 		$this->Register("migrate:make", function($parameters)
 		{
 			return Migration::Make($parameters);
+		});	
+
+		$this->Register("migrate:destroy", function($parameters)
+		{
+			return Migration::Destroy($parameters);
 		});
 
 		$this->Register("migrate:commit", function()
@@ -59,9 +64,12 @@ class Console
 	// Start the Console
 	public static function Start()
 	{
+		// Retrieve the global variables
+		if(!$argv) $argv = $_SERVER["argv"];
+
 		// Get the console variables
-		$function = $argv[0];
-		$rows = explode(",", $argv[1]);
+		$functionName = $argv[1];
+		$rows = explode(",", $argv[2]);
 		$vars = array();
 		foreach($rows as $row)
 		{
@@ -73,14 +81,20 @@ class Console
 		$console = new Console;
 
 		// Run the console
-		return $console->Run($function, $vars);
+		try
+		{
+			return $console->Run($functionName, $vars);
+		}
+		catch(\Exception $ex)
+		{
+			return "Error: " . $ex->getMessage();
+		}
 	}
 
 	// Generic function caller
 	public function Run($functionName, $parameters)
 	{
-		$functionName = $this->functions[$functionName];
-		$response = $functionName($parameters);
+		$response = $this->functions[$functionName]($parameters);
 		return $response;
 	}
 

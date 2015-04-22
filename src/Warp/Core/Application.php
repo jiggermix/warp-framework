@@ -104,6 +104,7 @@ class Application
 	{
 		$configuration = static::$environment->Get(Router::GetServer());
 
+		if(static::isConsole()) $configuration = static::$environment->Get("cli");
 		if(!$configuration) throw new \Exception("Error: Unknown environment");
 
 		$configuration->Apply();
@@ -116,7 +117,7 @@ class Application
 		return $this;
 	}
 
-	public function isConsole()
+	public static function isConsole()
 	{
 		return php_sapi_name() == 'cli';
 	}
@@ -125,12 +126,25 @@ class Application
 	{
 		try
 		{
+			// Return CLI if console
+			if(static::isConsole())
+			{
+				$environment = new \CLIConfiguration;
+				$environment->Apply();
+				return Console::Start();
+			}
+
+			// Prepare the configurations
 			static::GetInstance()->setConfiguration();
+
+			// Import web routes and resources
 			Reference::Import("route", "routes");
 			Reference::Import("resource", "resources");
 
+			// Retrieve the response
 			$response = Router::Fetch();
 
+			// Display the response
 			if($response instanceof IElement) echo $response->Render();
 			else if(!is_string($response) && $response) throw new \Exception("Invalid response");
 			else echo $response;

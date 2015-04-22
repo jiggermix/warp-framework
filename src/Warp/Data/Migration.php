@@ -19,7 +19,7 @@ class Migration
 	public function Make($parameters)
 	{
 		$factory = new MigrationFactory;
-		$factory->Generate($parameters);
+		return $factory->Generate($parameters);
 	}
 
 	public function Commit()
