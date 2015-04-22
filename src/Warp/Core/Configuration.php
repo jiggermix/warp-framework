@@ -11,7 +11,7 @@ namespace Warp\Core;
 use Warp\Core\Application;
 use Warp\Data\Database;
 use Warp\Data\DatabaseConfiguration;
-use Warp\Utils\Interfaces\IMigration;
+use Warp\Utils\Interfaces\IConfiguration;
 
 class Configuration implements IConfiguration
 {
