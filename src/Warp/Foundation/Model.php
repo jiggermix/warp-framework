@@ -515,5 +515,3 @@ class Model
 		static::$scopes[$name] = $action;
 	}
 }
-
-?>

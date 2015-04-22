@@ -14,6 +14,12 @@ use Warp\Utils\FileHandle;
 
 class Migration
 {
+	public function Make($parameters)
+	{
+		$factory = new MigrationFactory;
+		$factory->Generate($parameters);
+	}
+
 	public function Commit()
 	{
 		try
@@ -64,43 +70,6 @@ class Migration
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
-	}
-
-	public function Make($parameters)
-	{
-		try
-		{
-			$name = date("YmdHis");
-			$table = $parameters["name"];
-			$directory = Reference::Path("migration");
-			$className = "{$name}_migration";
-			$filename = "{$className}.php";
-
-			$model = new MigrationModel;
-			$model->name = $name;
-			$model->status = MigrationStatus::Pending;
-			$model->Save();
-
-			$template = new FileHandle("base.tpl", __DIR__."/Templates");
-			$templateContents = $template->Contents();
-			$template->Close();
-			$fileContents = $this->replaceTemplateVars($className, $table, $templateContents);
-
-			$file = new FileHandle($filename, $directory);
-			$file->Write($fileContents);
-			$file->Close();
-
-			return Response::Make(200, "Success", array("file" => $filename, "name" => $name, "table" => $table))->ToJSON();
-		}
-		catch(Exception $ex)
-		{
-			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
-		}
-	}
-
-	protected function replaceTemplateVars($className, $table, $templateContents)
-	{
-		return str_replace("{{table}}", $table, str_replace("{{class}}", $className, $templateContents))
 	}
 
 	public function Destroy($parameters)
@@ -265,5 +234,46 @@ class MigrationModel extends Model
 	{
 		$this->status = MigrationStatus::Pending;
 		$this->Save();
+	}
+}
+
+class MigrationFactory
+{	
+	public function Generate($parameters)
+	{
+		try
+		{
+			$name = date("YmdHis");
+			$table = $parameters["name"];
+			$directory = Reference::Path("migration");
+			$className = "{$name}_migration";
+			$filename = "{$className}.php";
+
+			$model = new MigrationModel;
+			$model->name = $name;
+			$model->status = MigrationStatus::Pending;
+			$model->Save();
+
+			$template = new FileHandle("base.tpl", __DIR__."/Templates");
+			$templateContents = $template->Contents();
+			$template->Close();
+			$fileContents = $this->replaceTemplateVars($className, $table, $templateContents);
+
+			$file = new FileHandle($filename, $directory);
+			$file->Write($fileContents);
+			$file->Close();
+
+			return Response::Make(200, "Success", array("file" => $filename, "name" => $name, "table" => $table))->ToJSON();
+		}
+		catch(Exception $ex)
+		{
+			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
+		}
+	}
+
+	protected function replaceTemplateVars($className, $table, $templateContents)
+	{
+		return str_replace("{{table}}", $table, 
+					str_replace("{{class}}", $className, $templateContents));
 	}
 }
