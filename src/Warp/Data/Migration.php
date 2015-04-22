@@ -32,7 +32,7 @@ class Migration
 
 			foreach($listMigrations as $itemMigration)
 			{
-				$name = "\\" . $itemMigration["name"] . "_migration";
+				$name = "\\W" . $itemMigration["name"] . "_migration";
 				$migrated[] = $name;
 
 				if(!class_exists($name)) throw new \Exception("The specified migration class does not exist: {$name}");
@@ -108,7 +108,7 @@ class Migration
 
 			if(!$itemMigration) throw new \Exception("All migrations have already been reverted");
 
-			$name = "\\" . $itemMigration["name"] . "_migration";
+			$name = "\\W" . $itemMigration["name"] . "_migration";
 
 			if(!class_exists($name)) throw new \Exception("The specified migration class does not exist: {$name}");
 
@@ -138,7 +138,7 @@ class Migration
 
 			foreach($listMigrations as $itemMigration)
 			{
-				$name = "\\" . $itemMigration["name"] . "_migration";
+				$name = "\\W" . $itemMigration["name"] . "_migration";
 				$reset[] = $name;
 
 				if(!class_exists($name)) throw new \Exception("The specified migration class does not exist : {$name}");
@@ -181,7 +181,7 @@ class Migration
 	{
 		try
 		{
-			Schema::Table("_Migration")
+			Schema::Table("_migration")
 				->Drop();
 			
 			return Response::Make(200, "Success", array("uninstalledAt" => date("Y-m-d H:i:s")))->ToJSON();
@@ -247,7 +247,7 @@ class MigrationFactory
 			$name = date("YmdHis");
 			$table = $parameters["name"];
 			$directory = Reference::Path("migration");
-			$className = "{$name}_migration";
+			$className = "W{$name}_migration";
 			$filename = "{$className}.php";
 
 			$model = new MigrationModel;
