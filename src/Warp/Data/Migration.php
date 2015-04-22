@@ -9,6 +9,7 @@
 namespace Warp\Data;
 
 use Warp\Core\Reference;
+use Warp\Foundation\Model;
 use Warp\Utils\Enumerations\SystemField;
 use Warp\Utils\FileHandle;
 
