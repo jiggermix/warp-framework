@@ -32,7 +32,7 @@ class Migration
 
 			foreach($listMigrations as $itemMigration)
 			{
-				$name = $itemMigration["name"] . "_migration";
+				$name = "\\" . $itemMigration["name"] . "_migration";
 				$migrated[] = $name;
 
 				if(!class_exists($name)) throw new \Exception("The specified migration class does not exist: {$name}");
@@ -46,7 +46,7 @@ class Migration
 
 			return Response::Make(200, "Success", array("migrated" => $migrated))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
@@ -61,14 +61,14 @@ class Migration
 			$model->status = MigrationStatus::Pending;
 			$model->Save();
 
-			$migration = new base_migration;
+			$migration = new \base_migration;
 			$migration->Up();
 
 			$model->Commit();
 
 			return Response::Make(200, "Success", array("installedAt" => date("Y-m-d H:i:s")))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
@@ -93,7 +93,7 @@ class Migration
 
 			return Response::Make(200, "Success", array("file" => $filename, "name" => $name))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
@@ -108,7 +108,7 @@ class Migration
 
 			if(!$itemMigration) throw new \Exception("All migrations have already been reverted");
 
-			$name = $itemMigration["name"] . "_migration";
+			$name = "\\" . $itemMigration["name"] . "_migration";
 
 			if(!class_exists($name)) throw new \Exception("The specified migration class does not exist: {$name}");
 
@@ -120,7 +120,7 @@ class Migration
 
 			return Response::Make(200, "Success", array("name" => $name))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
@@ -138,7 +138,7 @@ class Migration
 
 			foreach($listMigrations as $itemMigration)
 			{
-				$name = $itemMigration["name"] . "_migration";
+				$name = "\\" . $itemMigration["name"] . "_migration";
 				$reset[] = $name;
 
 				if(!class_exists($name)) throw new \Exception("The specified migration class does not exist : {$name}");
@@ -152,7 +152,7 @@ class Migration
 
 			return Response::Make(200, "Success", array("reset" => $reset))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
@@ -171,7 +171,7 @@ class Migration
 			
 			return Response::Make(200, "Success", array("installedAt" => date("Y-m-d H:i:s")))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
@@ -186,7 +186,7 @@ class Migration
 			
 			return Response::Make(200, "Success", array("uninstalledAt" => date("Y-m-d H:i:s")))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
@@ -267,7 +267,7 @@ class MigrationFactory
 
 			return Response::Make(200, "Success", array("file" => $filename, "name" => $name, "table" => $table))->ToJSON();
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
 			return Response::Make(405, "Error", $ex->getMessage())->ToJSON();
 		}
