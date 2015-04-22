@@ -8,6 +8,9 @@
 
 namespace Warp\Foundation;
 
+use Warp\Core\Reference;
+use Warp\Http\Response;
+use Warp\Utils\FileHandle;
 use Warp\Utils\Enumerations\SystemField;
 
 class FoundationFactory
