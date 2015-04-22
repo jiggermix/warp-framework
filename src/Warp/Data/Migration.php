@@ -78,7 +78,7 @@ class Migration
 	{
 		try
 		{
-			$name = $parameters["name"]."_migration";
+			$name = "\\W" . $parameters["name"]."_migration";
 			$filename = "{$name}.php";
 			$directory = Reference::Path("migration");
 
