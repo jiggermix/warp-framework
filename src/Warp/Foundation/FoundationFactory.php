@@ -91,6 +91,8 @@ class FoundationFactory
 	protected static function MakeView($parameters)
 	{
 		$class = $parameters["class"] . "View";
+		$layout = $parameters["layout"];
+		$page = $parameters["page"];
 		$directory = Reference::Path("view");
 		$filename = "{$class}.php";
 
@@ -108,11 +110,16 @@ class FoundationFactory
 		$file->Write($fileContents);
 		$file->Close();
 
-		$pageDirectory = Reference::Path("page");
-		$pageFilename = "default.php";
+		if($page)
+		{
+			$pageDirectory = Reference::Path("page");
+			$pageFilename = "default.php";
 
-		$pageFile = new FileHandle($pageFilename, $pageDirectory);
-		$pageFile->Write("<!-- Create your page here -->");
-		$pageFile->Close();
+			@mkdir($pageDirectory.$page);
+
+			$pageFile = new FileHandle($pageFilename, $pageDirectory);
+			$pageFile->Write("<!-- Create your page here -->");
+			$pageFile->Close();
+		}
 	}
 }
