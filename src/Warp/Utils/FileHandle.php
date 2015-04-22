@@ -15,7 +15,11 @@ class FileHandle
 
 	public function __construct($name, $path=null)
 	{
-		$this->filename = $path."/".$name;
+		if($path)
+			if(substr($path, strlen($path)-1, 1) != "/") 
+				$path = $path."/";
+
+		$this->filename = $path.$name;
 		$this->handle = fopen($this->filename, "a");
 	}
 

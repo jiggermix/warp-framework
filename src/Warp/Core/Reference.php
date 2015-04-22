@@ -32,7 +32,8 @@ class Reference
 	
 	public static function Autoload($name)
 	{
-		$name = strpos($name,"Configuration") > 0? str_replace("Configuration", "", $name) : $name;
+		$name = strpos($name,"_configuration") > 0 ? str_replace("_configuration", "", $name) : $name;
+		$name = strpos($name,"Configuration") > 0 ? str_replace("Configuration", "", $name) : $name;
 
 		$classExists 			= static::fileExists("class", $name);
 		$controlExists 			= static::fileExists("control", $name);;
@@ -40,7 +41,7 @@ class Reference
 		$controllerExists 		= strpos($name,"Controller") > 0 && static::fileExists("controller", $name);
 		$viewExists 			= strpos($name,"View") > 0 && static::fileExists("view", $name);
 		$configurationExists 	= static::fileExists("configuration", $name);
-		$migrationExists 		= strncmp("migration", $name, strlen("migration")) == 0 && static::fileExists("migration", $name);
+		$migrationExists 		= strpos($name,"_migration") > 0 && static::fileExists("migration", $name);
 		
 		if($classExists) 				static::Import("class", $name);
 		else if($controlExists) 		static::Import("control", $name);

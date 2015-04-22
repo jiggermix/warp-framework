@@ -11,7 +11,6 @@ namespace Warp\Foundation;
 use Warp\UI\Fragment;
 use Warp\UI\Page;
 use Warp\UI\Layout;
-use Warp\Templating\Morpheus;
 use Warp\Utils\Interfaces\IElement;
 
 class View implements IElement
@@ -77,15 +76,7 @@ class View implements IElement
 		$fragment = $this->getFragment();
 		$data = $this->getData();
 
-		if(Morpheus::Accepts($layout))
-			$view = Morpheus::Make()
-					->Layout($layout)
-					->Page($page."/default".Morpheus::FILE_EXTENSION)
-					->Fragment($page."/fragments/".$fragment)
-					->Data($data)
-					->Compile();
-		else
-			$view = static::getDefaultViewFile($layout, $page, $fragment, $data);
+		$view = static::getDefaultViewFile($layout, $page, $fragment, $data);
 		
 		return $view;
 	}

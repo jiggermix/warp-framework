@@ -137,15 +137,33 @@ class Model
 		$this->dirty[$name] = $value;
 		$this->values[$name] = $value;
 	}
+
+	// Added alias for GetSource
+	public static function Source()
+	{
+		return static::GetSource();
+	}
 	
 	public static function GetSource()
 	{
 		return static::$source;
 	}
+
+	// Added alias for GetKey
+	public static function Key()
+	{
+		return static::GetKey();
+	}
 	
 	public static function GetKey()
 	{
 		return static::$key;
+	}
+
+	// Added alias for GetKeyValue and SetKeyValue
+	public static function KeyValue($value=null)
+	{
+		return ($value) ? $this->SetKeyValue($value) : static::GetKeyValue();
 	}
 	
 	public function GetKeyValue()
@@ -156,6 +174,12 @@ class Model
 	public function SetKeyValue($value)
 	{
 		$this->Set(static::GetKey(), $value);
+	}
+
+	// Added alias for GetRelation
+	public function Relation($field)
+	{
+		return $this->GetRelation($field);
 	}
 	
 	public function GetRelation($field)
@@ -168,15 +192,45 @@ class Model
 		
 		return $query;
 	}
+
+	// Added alias for GetFields
+	public function Fields()
+	{
+		return $this->GetFields();
+	}
 	
 	public function GetFields()
 	{
 		return static::$fields;
 	}
+
+	// Added alias for GetValues
+	public function Values()
+	{
+		return $this->GetValues();
+	}
 	
 	public function GetValues()
 	{
 		return $this->values;
+	}
+
+	// Added alias for timestamp functions
+	public function CreatedAt()
+	{
+		return $this->GetCreatedAt();
+	}
+
+	// Added alias for timestamp functions
+	public function UpdatedAt()
+	{
+		return $this->GetUpdatedAt();
+	}
+
+	// Added alias for timestamp functions
+	public function DeletedAt()
+	{
+		return $this->GetDeletedAt();
 	}
 	
 	public function GetCreatedAt()
@@ -192,6 +246,13 @@ class Model
 	public function GetDeletedAt()
 	{
 		return $this->fields[SystemField::DeletedAt];
+	}
+
+	// Added as an alias to GetQuery
+	public static function Query()
+	{
+		$scopes = func_get_args();
+		return static::GetQuery($scopes);
 	}
 	
 	public static function GetQuery()
@@ -222,12 +283,18 @@ class Model
 			}
 		}
 
-		$scopes = func_get_args();		
-				
-		foreach($scopes as $scope)
+		// Retrieve scopes
+		$scopes = func_get_args();
+		
+		if($scopes)
 		{
-			$scopeAction = static::$scopes[$scope];
-			$query = $scopeAction($query);
+			if(is_array($scopes[0])) $scopes = $scopes[0];
+
+			foreach($scopes as $scope)
+			{
+				$scopeAction = static::$scopes[$scope];
+				$query = $scopeAction($query);
+			}
 		}
 		
 		return $query;
@@ -263,7 +330,7 @@ class Model
 		CommandQuery::ExecuteAll($commands);
 	}
 
-	public static function SaveEach($modelItem)
+	public static function SaveEach($modelItems)
 	{
 		$commands = array();
 

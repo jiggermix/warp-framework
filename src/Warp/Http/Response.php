@@ -8,6 +8,8 @@
 
 namespace Warp\Http;
 
+use Warp\Utils\Interfaces\IElement;
+
 class Response
 {
 	public static function Make($status, $message, $result)
@@ -19,7 +21,7 @@ class Response
 	}
 }
 
-class ResponseObject
+class ResponseObject implements IElement
 {
 	private $status;
 	private $message;
@@ -41,9 +43,14 @@ class ResponseObject
 			));
 	}
 
+	public function Render()
+	{
+		return $this->ToJSON();
+	}
+
 	public function __toString()
 	{
-		return $message;
+		return $this->message;
 	}
 }
 

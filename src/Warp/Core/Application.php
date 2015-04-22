@@ -115,6 +115,11 @@ class Application
 		Database::Set($name);
 		return $this;
 	}
+
+	public function isConsole()
+	{
+		return php_sapi_name() == 'cli';
+	}
 	
 	public static function Start()
 	{

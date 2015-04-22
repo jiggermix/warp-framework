@@ -3,13 +3,10 @@
 /**
  * Query class
  * @author Jake Josol
- * @description Query class for all model queries
+ * @description Query class for all database queries
  */
 
 namespace Warp\Data;
-
-use Warp\Data\Database;
-use Warp\Data\QueryObject;
 
 class Query
 {

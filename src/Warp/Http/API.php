@@ -17,7 +17,15 @@ class API
 		$response = Response::Make(APIStatus::Unknown, APIMessage::Unknown, array())->ToJSON();
 		$controllerName = "\\" . $parameters["class"] . "Controller";
 		
-		if(!$controllerName::$HasAPI) return $response;
+		try
+		{
+			$hasAPI = $controllerName::$HasAPI;
+			if(!$hasAPI) return $response;
+		}
+		catch(\Exception $ex)
+		{
+			return $response;
+		}
 		
 		switch($type)
 		{
