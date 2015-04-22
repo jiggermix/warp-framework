@@ -23,7 +23,7 @@ class FoundationFactory
 			static::MakeController($parameters);
 			static::MakeView($parameters);
 
-			return Response::Make(200, "Success", array("file" => $filename, "class" => $class, "source" => $source))->ToJSON();
+			return Response::Make(200, "Success", array("class" => $parameters["class"]))->ToJSON();
 		}
 		catch(Exception $ex)
 		{
