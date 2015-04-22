@@ -211,13 +211,13 @@ class MigrationModel extends Model
 
 		self::Scope("pending", function($query)
 		{
-			$query->WhereEqualTo("status", MigrationStatus::Pending)
+			$query->WhereEqualTo("status", MigrationStatus::Pending);
 			$query->OrderBy(SystemField::CreatedAt);
 			return $query;
 		});
 		self::Scope("migrated", function($query)
 		{
-			$query->WhereEqualTo("status", MigrationStatus::Committed)
+			$query->WhereEqualTo("status", MigrationStatus::Committed);
 			$query->OrderByDescending(SystemField::CreatedAt);
 			return $query;
 		});
