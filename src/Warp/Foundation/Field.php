@@ -222,6 +222,13 @@ class Field
 		return $this;
 	}
 
+	public function Checkbox()
+	{
+		$this->Input(InputType::Checkbox);
+
+		return $this;
+	}
+
 	public function Required()
 	{
 		$modelName = $this->model;
