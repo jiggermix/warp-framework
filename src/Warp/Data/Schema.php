@@ -211,7 +211,7 @@ class Table
 		return $this;
 	}
 
-	public function SessionToken($field="sessionToken")
+	public function SessionToken($field="session_token")
 	{
 		$this->String($field, 100);
 
@@ -233,6 +233,25 @@ class Table
 		$this->fields[$field] = array(
 			"type" => "DATETIME",
 			"options" => array("NULL", "DEFAULT NULL")
+		);
+
+		return $this;
+	}
+
+	public function Timestamp($field)
+	{
+		$this->fields[$field] = array(
+			"type" => "TIMESTAMP"
+		);
+
+		return $this;
+	}
+
+	public function NullableTimestamp($field)
+	{
+		$this->fields[$field] = array(
+			"type" => "TIMESTAMP",
+			"options" => array("NULL")
 		);
 
 		return $this;
