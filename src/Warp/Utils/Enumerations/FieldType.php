@@ -10,6 +10,7 @@ namespace Warp\Utils\Enumerations;
   
 class FieldType
 {
+	const Boolean = "bit";
 	const String = "string";
 	const Text = "text";
 	const Float = "float";

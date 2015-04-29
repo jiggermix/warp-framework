@@ -21,6 +21,7 @@ class InputType
 	const Textarea = "textarea";
 	const Select = "select";
 	const File = "file";
+	const Checkbox = "checkbox";
 }
  
 ?>

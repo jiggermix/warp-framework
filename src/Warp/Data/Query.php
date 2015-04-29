@@ -57,6 +57,11 @@ class Query
 			);
 		}
 	}
+
+	public static function Of($source, $key=null)
+	{
+		return new Query($source, $key);
+	}
 	
 	protected function addWhereClause($field, $value, $type)
 	{
@@ -65,6 +70,18 @@ class Query
 			"value" => $value,
 			"type" => $type
 		);
+	}
+
+	public function Where()
+	{
+		$parameters = func_get_args();
+
+		if(count($parameters) == 2)
+			$this->addWhereClause($parameters[0], $parameters[1], static::$WHERE_TYPE["EQUAL_TO"]);
+		else if(count($parameters) > 2)
+			$this->addWhereClause($parameters[0], $parameters[2], $parameters[1]);
+		else
+			throw new \Exception("The where function needs 2 or more parameters");
 	}
 	
 	public function WhereEqualTo($field, $value)

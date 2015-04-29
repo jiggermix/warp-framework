@@ -13,6 +13,7 @@ use Warp\Foundation\Model;
 use Warp\Http\Response;
 use Warp\Utils\Enumerations\SystemField;
 use Warp\Utils\FileHandle;
+use Warp\Utils\Interfaces\IMigration;
 
 class Migration
 {
@@ -27,12 +28,29 @@ class Migration
 		try
 		{
 			$migrated = array();
-			$model = new MigrationModel;
-			$listMigrations = $model->Query("pending")->Find();
 
-			foreach($listMigrations as $itemMigration)
+			// Get list of completed migrations
+			$completedMigrations = MigrationModel::Query()->OrderBy("name")->Find();
+			$completedMigrations = array_map(function($migrationItem)
 			{
-				$name = "\\W" . $itemMigration["name"] . "_migration";
+				return $migrationItem["name"];
+			}, $completedMigrations);
+
+			// Get list of all migrations
+			$listMigrations = glob(Reference::Path("migration")."W*_migration.php");
+			$listMigrations = array_map(function($migrationItem)
+			{
+				return str_replace("_migration.php", "", str_replace("W", "", basename($migrationItem)));
+			}, $listMigrations);
+			sort($listMigrations);
+
+			// Get pending migrations
+			$pendingMigrations = array_diff($listMigrations, $completedMigrations);
+
+			foreach($pendingMigrations as $itemMigration)
+			{
+				$name = "\\W" . $itemMigration . "_migration";
+
 				$migrated[] = $name;
 
 				if(!class_exists($name)) throw new \Exception("The specified migration class does not exist: {$name}");
@@ -41,8 +59,10 @@ class Migration
 				if(!($migration instanceof IMigration)) throw new \Exception("The specified migration class does not implement IMigration: {$name}");
 				$migration->Up();
 
-				$itemModel = new MigrationModel($itemMigration["id"]);
-				$itemModel->Commit();
+				$model = new MigrationModel;
+				$model->name = $itemMigration;
+				$model->status = MigrationStatus::Committed;
+				$model->Save();
 			}
 
 			return Response::Make(200, "Success", array("migrated" => $migrated))->ToJSON();
@@ -57,15 +77,13 @@ class Migration
 	{
 		try
 		{
-			$model = new MigrationModel;
-			$model->name = "base";
-			$model->status = MigrationStatus::Pending;
-			$model->Save();
-
 			$migration = new \base_migration;
 			$migration->Up();
 
-			$model->Commit();
+			$model = new MigrationModel;
+			$model->name = "base";
+			$model->status = MigrationStatus::Committed;
+			$model->Save();
 
 			return Response::Make(200, "Success", array("installedAt" => date("Y-m-d H:i:s")))->ToJSON();
 		}
@@ -234,8 +252,7 @@ class MigrationModel extends Model
 
 	public function Revert()
 	{
-		$this->status = MigrationStatus::Pending;
-		$this->Save();
+		$this->Delete();
 	}
 }
 
@@ -246,15 +263,10 @@ class MigrationFactory
 		try
 		{
 			$name = date("YmdHis");
-			$table = $parameters["name"];
+			$table = $parameters["table"];
 			$directory = Reference::Path("migration");
 			$className = "W{$name}_migration";
 			$filename = "{$className}.php";
-
-			$model = new MigrationModel;
-			$model->name = $name;
-			$model->status = MigrationStatus::Pending;
-			$model->Save();
 
 			$template = new FileHandle("base.tpl", __DIR__."/Templates");
 			$templateContents = $template->Contents();

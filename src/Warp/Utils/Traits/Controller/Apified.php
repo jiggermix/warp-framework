@@ -35,6 +35,27 @@ trait Apified
 		{
 			$query = static::GetModel()->GetQuery();
 			$query->OrderByDescending(static::GetModel()->GetKey());
+			$searchParameters = Input::FromGet();
+
+			foreach($searchParameters as $key => $value)
+			{
+				$keyParts = explode("__", $key);
+
+				$comparisons = array(
+					"eq" => "=",
+					"gt" => ">",
+					"lt" => "<",
+					"gte" => ">=",
+					"lte" => "<=",
+					"match" => "LIKE"
+				);
+
+				if($keyParts[1])
+					$query->Where($keyParts[0], $comparisons[$keyParts[1]], $value);
+				else
+					$query->Where($keyParts[0], $comparisons["eq"], $value);
+			}
+
 			$results = $query->Find();
 			
 			$listRelations = array();

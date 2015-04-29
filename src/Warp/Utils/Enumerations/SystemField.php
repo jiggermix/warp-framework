@@ -11,9 +11,9 @@ namespace Warp\Utils\Enumerations;
 class SystemField
 {
 	const ID = "id";
-	const CreatedAt = "createdAt";
-	const UpdatedAt = "updatedAt";
-	const DeletedAt = "deletedAt";
+	const CreatedAt = "created_at";
+	const UpdatedAt = "updated_at";
+	const DeletedAt = "deleted_at";
 }
  
 ?>

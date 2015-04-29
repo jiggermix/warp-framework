@@ -30,6 +30,11 @@ class Console
 			return Migration::Install();
 		});
 
+		$this->Register("migrate:base", function($parameters)
+		{
+			return Migration::Base();
+		});	
+
 		$this->Register("migrate:make", function($parameters)
 		{
 			return Migration::Make($parameters);
@@ -92,15 +97,19 @@ class Console
 		}
 		catch(\Exception $ex)
 		{
-			return "Error: " . $ex->getMessage();
+			return "\nError: " . $ex->getMessage() . "\n";
 		}
 	}
 
 	// Generic function caller
 	public function Run($functionName, $parameters)
 	{
+		if(!array_key_exists($functionName, $this->functions))
+			return "\nError: The command '{$functionName}' does not exist\n";
+
 		$response = $this->functions[$functionName]($parameters);
-		return $response;
+		
+		return "\n{$response}\n";
 	}
 
 	// Function registry
