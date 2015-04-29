@@ -77,11 +77,11 @@ class Migration
 	{
 		try
 		{
-			$migration = new \base_migration;
+			$migration = new \WBASE_migration;
 			$migration->Up();
 
 			$model = new MigrationModel;
-			$model->name = "base";
+			$model->name = "BASE";
 			$model->status = MigrationStatus::Committed;
 			$model->Save();
 

@@ -43,7 +43,7 @@ class Job
 
 		$model = new JobModel;
 		$model->handler = $serializedHandler;
-		$model->runAt = $runAt;
+		$model->run_at = $runAt;
 		$model->attempts = 0;
 		$model->priority = $priority;
 
@@ -59,20 +59,20 @@ class Job
 	public function Lock()
 	{
 		$this->instance->attempts += 1;
-		$this->instance->lockedAt = date("Y-m-d H:i:s");
+		$this->instance->locked_at = date("Y-m-d H:i:s");
 		$this->instance->Save();
 	}
 
 	public function Release()
 	{
-		$this->instance->lockedAt = null;
+		$this->instance->locked_at = null;
 		$this->instance->Save();	
 	}
 
 	public function Fail($message)
 	{
-		$this->instance->failedAt = date("Y-m-d H:i:s");
-		$this->instance->lastError = $message;
+		$this->instance->failed_at = date("Y-m-d H:i:s");
+		$this->instance->last_error = $message;
 		$this->instance->Save();
 	}
 
@@ -106,7 +106,7 @@ class Job
 
 	public static function Load()
 	{
-		$query = JobModel::Query()->WhereLessThanOrEqualTo("runAt", date("Y-m-d H:i:s"));
+		$query = JobModel::Query()->WhereLessThanOrEqualTo("run_at", date("Y-m-d H:i:s"));
 		$pendingJob = $query->First();
 
 		if(!$pendingJob) return;
@@ -134,12 +134,12 @@ class JobModel extends Model
 	{
 		self::Has(SystemField::ID)->Increment();
 		self::Has("handler")->Text();
-		self::Has("runAt")->DateTime();
+		self::Has("run_at")->DateTime();
 		self::Has("priority")->Integer();
 		self::Has("attempts")->Integer();
-		self::Has("lastError")->Text();
-		self::Has("lockedAt")->DateTime();
-		self::Has("failedAt")->DateTime();
+		self::Has("last_error")->Text();
+		self::Has("locked_at")->DateTime();
+		self::Has("failed_at")->DateTime();
 		self::Has("queue");
 	}
 }
