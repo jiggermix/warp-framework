@@ -476,7 +476,7 @@ class Model
 	
 	public static function HasMany($model, $key=null)
 	{
-		if(!$key) $key = $model."ID";
+		if(!$key) $key = $model."_id";
 		$fieldObject = static::Has($model)
 						->Relation($model, $key);
 		return $fieldObject;
@@ -484,7 +484,7 @@ class Model
 	
 	public static function BelongsTo($model, $key=null)
 	{
-		if(!$key) $key = $model."ID";
+		if(!$key) $key = $model."_id";
 		$fieldObject = static::Has($model)
 						->Pointer($model, $key);
 		return $fieldObject;
