@@ -123,7 +123,7 @@ class Control implements IElement
 		$listProperties = array();
 		foreach($this->properties as $key => $value) $listProperties[] = "{$key}=\"{$value}\"";
 		$properties = " ".implode(" ", $listProperties);
-		
+
 		$listChildren = array();
 		foreach($this->children as $child) 
 			if($child)
@@ -132,7 +132,7 @@ class Control implements IElement
 		$children = implode(PHP_EOL, $listChildren);
 		
 		$enclosingTag = ($this->isParent) ? "</{$this->type}>" : "";
-		
+
 		return "<{$this->type}{$id}{$classes}{$properties}>{$children}{$enclosingTag}";
 	}
 

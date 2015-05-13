@@ -98,7 +98,7 @@ trait Apified
 		return json_encode(array("key" => $model->GetKeyValue()));
 	}
 	
-	public function DeletAction($parameters=null)
+	public function DeleteAction($parameters=null)
 	{
 		$input = Input::FromPost();
 		$model = static::GetModel();

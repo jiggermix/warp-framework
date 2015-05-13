@@ -20,7 +20,17 @@ class Input
 		$input = array();
 
 		foreach($_REQUEST as $key => $value)
-			$input[$key] = htmlentities($value);
+			if(!is_array($value))
+				$input[$key] = htmlentities($value);
+			else
+			{
+				$valueItems = array();
+				foreach($value as $valueItem)
+					$valueItems[] = htmlentities($valueItem);
+
+				$input[$key] = $valueItems;
+			}
+
 
 		return $input;
 	}
@@ -30,11 +40,33 @@ class Input
 		$input = array();
 
 		if($parameter)
-			return htmlentities($_GET[$parameter]);
+		{
+			$value = $_GET[$parameter];
+
+			if(!is_array($value))
+				return htmlentities($value);
+			else
+			{
+				$valueItems = array();
+				foreach($value as $valueItem)
+					$valueItems[] = htmlentities($valueItem);
+
+				return $valueItems;
+			}
+		}
 		else
 		{
 			foreach($_GET as $key => $value)
-				$input[$key] = htmlentities($value);
+				if(!is_array($value))
+					$input[$key] = htmlentities($value);
+				else
+				{
+					$valueItems = array();
+					foreach($value as $valueItem)
+						$valueItems[] = htmlentities($valueItem);
+
+					$input[$key] = $valueItems;
+				}
 
 			return $input;
 		}
@@ -45,11 +77,33 @@ class Input
 		$input = array();
 
 		if($parameter)
-			return htmlentities($_POST[$parameter]);
+		{
+			$value = $_POST[$parameter];
+
+			if(!is_array($value))
+				return htmlentities($value);
+			else
+			{
+				$valueItems = array();
+				foreach($value as $valueItem)
+					$valueItems[] = htmlentities($valueItem);
+
+				return $valueItems;
+			}
+		}
 		else
 		{
 			foreach($_POST as $key => $value)
-				$input[$key] = htmlentities($value);
+				if(!is_array($value))
+					$input[$key] = htmlentities($value);
+				else
+				{
+					$valueItems = array();
+					foreach($value as $valueItem)
+						$valueItems[] = htmlentities($valueItem);
+
+					$input[$key] = $valueItems;
+				}
 
 			return $input;
 		}

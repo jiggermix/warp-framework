@@ -159,7 +159,7 @@ class Router
 	public static function Add($route, $action, $options=null)
 	{
 		if(!static::$patterns) static::$patterns = new PatternList();
-		if(!$options) $options = static::$options;
+		if(static::$options) $options = array_merge($options, static::$options);
 		
 		// Retrieve the pattern
 		$pattern = static::parseRoute($route);
@@ -216,9 +216,9 @@ class Router
 			static::$patterns->SetDefault($class);
 	}
 	
-	public static function Home($class)
+	public static function Home($class, $options=null)
 	{
-		static::Add("/", $class);
+		static::Add("/", $class, $options);
 	}
 
 	public static function Group($route, $subroutes, $options=null)
@@ -246,7 +246,7 @@ class Router
 	public static function Fetch()
 	{			
 		if(!static::$patterns) static::$patterns = new PatternList();
-	
+
 		// If no default route is set, add the pre-built 404 response
 		static::$patterns
 			->SetDefault(function()
@@ -260,14 +260,14 @@ class Router
 			else
 			{
 				$valid = true;
-				if($pattern["options"]["type"] != static::GetVerb()) 
-					$valid = false;
+				if($pattern["options"]["type"] && $pattern["options"]["type"] != static::GetVerb()) 
+					return false;
 
 				switch($pattern["options"]["before"])
 				{
 					case "auth.active":
 						$valid = Authentication::User() ? true : false;
-
+						
 						if(!$valid && $pattern["options"]["failed"]) Navigate::Within($pattern["options"]["failed"]);
 					break;
 

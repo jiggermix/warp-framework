@@ -20,6 +20,7 @@ class InputType
 	const Display = "display";
 	const Textarea = "textarea";
 	const Select = "select";
+	const SelectMultiple = "select-multiple";
 	const File = "file";
 	const Checkbox = "checkbox";
 }

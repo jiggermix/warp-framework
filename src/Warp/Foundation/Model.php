@@ -72,6 +72,27 @@ class Model
 		if(!isset(static::$fields[$name])) return null;
 		return $this->values[$name];		
 	}
+
+	/***
+	 * Call catch-all
+	 * @param string $name
+	 * @return string $value
+	 */
+	public function __call($name, $parameters)
+	{
+		return $this->GetRelation($name);
+	}
+
+	/***
+	 * CallStatic catch-all
+	 * @param string $name
+	 * @return string $value
+	 */
+	public static function __callStatic($name, $parameters)
+	{
+		$method = "GetField" . $name;
+		return static::$method;
+	}
 	
 	public function GetFieldType($name)
 	{
@@ -105,6 +126,21 @@ class Model
 	{
 		return static::$fields[$name]["hidden"];
 	}
+
+	public function GetFieldLookup($name)
+	{
+		return static::$fields[$name]["lookup"] ? static::$fields[$name]["lookup"] : array();
+	}
+
+	public function GetFieldDisplayOnly($name)
+	{
+		return static::$fields[$name]["displayOnly"];		
+	}
+
+	public function GetFieldData($name, $property)
+	{
+		return static::$fields[$name]["data-".$property];
+	}
 	
 	/***
 	 * Setter
@@ -118,6 +154,7 @@ class Model
 	public function Set($name,$value)
 	{
 		if(!isset(static::$fields[$name])) return;
+		if(static::$fields[$name]["displayOnly"]) return;
 
 		switch(static::$fields[$name]["type"])
 		{
@@ -161,9 +198,9 @@ class Model
 	}
 
 	// Added alias for GetKeyValue and SetKeyValue
-	public static function KeyValue($value=null)
+	public function KeyValue($value=null)
 	{
-		return ($value) ? $this->SetKeyValue($value) : static::GetKeyValue();
+		return ($value) ? $this->SetKeyValue($value) : $this->GetKeyValue();
 	}
 	
 	public function GetKeyValue()
@@ -263,7 +300,7 @@ class Model
 		
 		foreach(static::$fields as $field => $details)
 		{
-			if(!$details["hidden"] && !$details["pointer"] && $field)
+			if(!$details["hidden"] && !$details["pointer"] && $field && !$details["displayOnly"])
 				$query->IncludeField($field, static::GetSource().".".$field);
 
 			if($details["pointer"])

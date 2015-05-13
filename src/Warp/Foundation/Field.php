@@ -39,6 +39,14 @@ class Field
 
 		return $this;
 	}
+
+	public function Data($property, $value=null)
+	{
+		$modelName = $this->model;
+		$modelName::SetOption($this->name, "data-".$property, $value);
+
+		return $this;
+	}
 	
 	public function Size($min, $max=null)
 	{
@@ -90,6 +98,14 @@ class Field
 		return $this;
 	}
 
+	public function DisplayOnly()
+	{
+		$modelName = $this->model;
+		$modelName::SetOption($this->name, "displayOnly", true);
+
+		return $this;
+	}
+
 	public function Hidden()
 	{
 		$modelName = $this->model;
@@ -102,6 +118,7 @@ class Field
 	{
 		$list = func_get_args();
 		$modelName = $this->model;
+		$this->Input(InputType::Select);
 		$modelName::SetOption($this->name, "lookup", $list);
 		
 		return $this;
