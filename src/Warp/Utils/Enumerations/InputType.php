@@ -23,6 +23,7 @@ class InputType
 	const SelectMultiple = "select-multiple";
 	const File = "file";
 	const Checkbox = "checkbox";
+	const Divider = "divider";
 }
  
 ?>

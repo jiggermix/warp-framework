@@ -168,16 +168,23 @@ class Router
 		{
 			static::$patterns->AddPattern($pattern, function($parameters) use ($action)
 			{
-				$actionItems = explode("@", $action);
-
-				$name = $actionItems[0];
-				$handler = $actionItems[1] . "Action";
-				$page = new $name();
-
-				if($actionItems[1])
-					return $page->$handler($parameters);
-				else
-					return $page->IndexAction($parameters);
+				try
+				{
+					$actionItems = explode("@", $action);
+	
+					$name = $actionItems[0];
+					$handler = $actionItems[1] . "Action";
+					$page = new $name();
+	
+					if($actionItems[1])
+						return $page->$handler($parameters);
+					else
+						return $page->IndexAction($parameters);
+				}
+				catch(\Exception $ex)
+				{
+					return Response::Make(500, "Error", $ex)->ToJSON();
+				}
 			}, $options);
 		}
 		else
@@ -255,7 +262,7 @@ class Router
 			});
 			
 		return static::$patterns->FindMatch(static::GetURL(), function($pattern)
-		{
+		{			
 			if($pattern["options"] == null) return true;
 			else
 			{

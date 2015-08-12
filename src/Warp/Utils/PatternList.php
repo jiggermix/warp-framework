@@ -42,7 +42,7 @@ class PatternList
 	public function FindMatch($pattern, $filter=null)
 	{
 		$matches = array();
-
+		
 		foreach($this->patterns as $patternItem)
 		{
 			if(preg_match($patternItem["pattern"], $pattern, $matches))
