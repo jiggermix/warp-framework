@@ -241,7 +241,7 @@ class Router
 	{
 		static::Get($base, "{$controller}Controller", $options);
 
-		static::Group("{$base}/", function() use ($controller)
+		static::Group("{$base}/", function() use ($controller, $options)
 		{
 			static::Get("add", 				"{$controller}Controller@Create", $options);
 			static::Get("view/int:id", 		"{$controller}Controller@Read", $options);

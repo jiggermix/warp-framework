@@ -12,7 +12,7 @@ class Input
 {
 	public static function Of($parameter)
 	{
-		return htmlentities($_REQUEST[$parameter]);
+		return htmlspecialchars($_REQUEST[$parameter], ENT_NOQUOTES, "UTF-8"); // htmlentities($_REQUEST[$parameter]);
 	}
 
 	public static function All()
@@ -21,16 +21,15 @@ class Input
 
 		foreach($_REQUEST as $key => $value)
 			if(!is_array($value))
-				$input[$key] = htmlentities($value);
+				$input[$key] = htmlspecialchars($value, ENT_NOQUOTES, "UTF-8");
 			else
 			{
 				$valueItems = array();
 				foreach($value as $valueItem)
-					$valueItems[] = htmlentities($valueItem);
+					$valueItems[] = htmlspecialchars($value, ENT_NOQUOTES, "UTF-8");
 
 				$input[$key] = $valueItems;
 			}
-
 
 		return $input;
 	}
@@ -44,12 +43,12 @@ class Input
 			$value = $_GET[$parameter];
 
 			if(!is_array($value))
-				return htmlentities($value);
+				return htmlspecialchars($value, ENT_NOQUOTES, "UTF-8");
 			else
 			{
 				$valueItems = array();
 				foreach($value as $valueItem)
-					$valueItems[] = htmlentities($valueItem);
+					$valueItems[] = htmlspecialchars($valueItem, ENT_NOQUOTES, "UTF-8");
 
 				return $valueItems;
 			}
@@ -58,12 +57,12 @@ class Input
 		{
 			foreach($_GET as $key => $value)
 				if(!is_array($value))
-					$input[$key] = htmlentities($value);
+					$input[$key] = htmlspecialchars($value, ENT_NOQUOTES, "UTF-8");
 				else
 				{
 					$valueItems = array();
 					foreach($value as $valueItem)
-						$valueItems[] = htmlentities($valueItem);
+						$valueItems[] = htmlspecialchars($valueItem, ENT_NOQUOTES, "UTF-8");
 
 					$input[$key] = $valueItems;
 				}
@@ -81,12 +80,12 @@ class Input
 			$value = $_POST[$parameter];
 
 			if(!is_array($value))
-				return htmlentities($value);
+				return htmlspecialchars($value, ENT_NOQUOTES, "UTF-8");
 			else
 			{
 				$valueItems = array();
 				foreach($value as $valueItem)
-					$valueItems[] = htmlentities($valueItem);
+					$valueItems[] = htmlspecialchars($valueItem, ENT_NOQUOTES, "UTF-8");
 
 				return $valueItems;
 			}
@@ -95,12 +94,12 @@ class Input
 		{
 			foreach($_POST as $key => $value)
 				if(!is_array($value))
-					$input[$key] = htmlentities($value);
+					$input[$key] = htmlspecialchars($value, ENT_NOQUOTES, "UTF-8");
 				else
 				{
 					$valueItems = array();
 					foreach($value as $valueItem)
-						$valueItems[] = htmlentities($valueItem);
+						$valueItems[] = htmlspecialchars($valueItem, ENT_NOQUOTES, "UTF-8");
 
 					$input[$key] = $valueItems;
 				}
