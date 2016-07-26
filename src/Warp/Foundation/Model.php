@@ -49,7 +49,7 @@ class Model
 	{
 		foreach(static::$fields as $field => $options)
 		{
-			if($options["required"] && $this->values[$field] == null) $errors[] = $field . " is a required field"; 
+			//if($options["required"] && $this->values[$field] == null) $errors[] = $field . " is a required field"; 
 		}
 
 		return $errors;

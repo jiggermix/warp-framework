@@ -143,9 +143,10 @@ class Application
 
 			// Retrieve the response
 			$response = Router::Fetch();
-
+			
 			// Display the response
 			if($response instanceof IElement) echo $response->Render();
+			else if(is_array($response)) echo json_encode($response);
 			else if(!is_string($response) && $response) throw new \Exception("Invalid response");
 			else echo $response;
 		}
